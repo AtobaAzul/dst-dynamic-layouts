@@ -11,13 +11,13 @@ local function CheckValidEntities(inst, reset)
 		end
 	end
 
-	if reset then 
+	if reset == true then --"itemget" event pushes the second param as some table. Need to do explicit true check
 		return
 	end
 
 	inst.range = 0
 
-    local itemsinside = inst.components.container:GetAllItems()
+	local itemsinside = inst.components.container:GetAllItems()
 
 	for i, v in ipairs(itemsinside) do
 		if v.prefab == "log" then
@@ -291,15 +291,24 @@ local function SpawnDynamicLayout(inst)
 
 		for k, v in pairs(data[inst.components.writeable.text]) do
 			if v.tile ~= nil then
-				local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(v.relative_x * rotx + x,
-					v.relative_y * rotz + y,
-					v.relative_z + z)
+				print(v.tile)
+				local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(v.relative_x * rotz + x,
+					v.relative_y + y,
+					v.relative_z * rotz + z)
+				print(tile_x, tile_z)
 				TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
 			else
+				local nearbyents = TheSim:FindEntities(v.relative_x * rotx + x, v.relative_y + y, v.relative_z * rotz + z,
+					2, nil, { "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable" })
+				for k, v in pairs(nearbyents) do
+					v:Remove()
+				end
 				local prefab = SpawnSaveRecord(v["1"])
 				prefab.Transform:SetPosition(v.relative_x * rotx + x, v.relative_y + y, v.relative_z * rotz + z)
+				prefab:AddTag("noreplaceremove")
 			end
 		end
+		inst:Remove()
 	end
 end
 
@@ -348,10 +357,13 @@ local function spawnerfn()
 		local tile_x, tile_y, tile_z = TheWorld.Map:GetTileCenterPoint(x, 0, z)
 		inst.Transform:SetPosition(tile_x, tile_y, tile_z)
 
-		if inst.layout ~= nil and type(inst.layout) == "string" or inst.components.writeable.text ~= nil or inst.components.writeable.text ~= "" then --this defines
+		if inst.layout ~= nil and type(inst.layout) == "string" then
 			inst.components.writeable.text = inst.layout
-			SpawnDynamicLayout(inst)
+		elseif inst.layout ~= nil and type(inst.layout) == "table" then
+			inst.components.writeable.text = weighted_random_choice(inst.layout)
 		end
+
+		SpawnDynamicLayout(inst)
 	end)
 
 	return inst

@@ -16,8 +16,6 @@ if kinds == nil then
     return
 end
 
-
-
 TUNING.DL = {
     MODROOT = MODROOT,
 }
