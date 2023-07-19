@@ -172,8 +172,15 @@ local function fn()
 
 	inst:AddComponent("inspectable")
 	inst:AddComponent("writeable")
-
 	inst:AddComponent("lootdropper")
+
+	inst:AddComponent("container")
+    inst.components.container:WidgetSetup("dl_recorder")
+    inst.components.container.onopenfn = onopen
+    inst.components.container.onclosefn = onclose
+    inst.components.container.skipclosesnd = true
+    inst.components.container.skipopensnd = true
+
 	inst:AddComponent("workable")
 	inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
 	inst.components.workable:SetWorkLeft(2)
@@ -360,5 +367,5 @@ local function spawnerfn()
 	return inst
 end
 
-return Prefab("dl_capturer", fn), -- Version 1.0
+return Prefab("dl_recorder", fn), -- Version 1.0
 	Prefab("dl_tileflag", TileFlag), Prefab("dl_spawner", spawnerfn)

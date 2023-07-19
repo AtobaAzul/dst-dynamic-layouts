@@ -28,12 +28,12 @@ end
 
 local containers = GLOBAL.require("containers")
 
-containers.params.dl_capturer = GLOBAL.deepcopy(containers.params.shadowchester)
-containers.params.dl_capturer.itemtestfn = itemtestfn
+containers.params.dl_recorder = GLOBAL.deepcopy(containers.params.shadowchester)
+containers.params.dl_recorder.itemtestfn = itemtestfn
 
 
 
-kinds["dl_capturer"] = {
+kinds["dl_recorder"] = {
     prompt = GLOBAL.STRINGS.SIGNS.MENU.PROMPT,
     animbank = "ui_board_5x3",
     animbuild = "ui_board_5x3",
@@ -52,4 +52,4 @@ kinds["dl_capturer"] = {
     --defaulttext = SignGenerator,
 }
 
-kinds["dl_spawner"] = kinds["dl_capturer"]
+kinds["dl_spawner"] = kinds["dl_recorder"]
