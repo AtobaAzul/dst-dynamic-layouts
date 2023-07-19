@@ -1,0 +1,351 @@
+{
+    "TestSetpiece": [
+        {
+            "1": {
+                "x": -262,
+                "prefab": "dl_tileflag",
+                "z": 222
+            },
+            "tile": 261,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        {
+            "1": {
+                "data": {
+                    "burnt": true
+                },
+                "x": -266,
+                "prefab": "treasurechest",
+                "z": 222
+            },
+            "2": [],
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        {
+            "1": {
+                "data": {
+                    "savedrotation": {
+                        "rotation": 12.500011444092
+                    },
+                    "inventory": {
+                        "items": [],
+                        "equip": {
+                            "hands": {
+                                "x": -262,
+                                "z": 218,
+                                "skinname": "spear_simple",
+                                "prefab": "spear",
+                                "skin_id": 636586047
+                            },
+                            "head": {
+                                "x": -262,
+                                "prefab": "woodcarvedhat",
+                                "z": 218
+                            },
+                            "body": {
+                                "x": -262,
+                                "prefab": "armordreadstone",
+                                "z": 218
+                            }
+                        }
+                    }
+                },
+                "x": -262,
+                "prefab": "sewing_mannequin",
+                "z": 218
+            },
+            "2": [],
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        {
+            "1": {
+                "x": -262,
+                "prefab": "dl_tileflag",
+                "z": 218
+            },
+            "tile": 261,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        {
+            "1": {
+                "x": -262,
+                "prefab": "dl_tileflag",
+                "z": 226
+            },
+            "tile": 261,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        {
+            "1": {
+                "x": -263.5,
+                "prefab": "fence_rotator",
+                "z": 226.5
+            },
+            "relative_x": -1.5,
+            "relative_y": 1.0291032026544e-008,
+            "relative_z": 4.5
+        },
+        {
+            "1": {
+                "data": {
+                    "container": {
+                        "items": [
+                            {
+                                "data": {
+                                    "stackable": {
+                                        "stack": 4
+                                    }
+                                },
+                                "x": -266,
+                                "prefab": "turf_savanna",
+                                "z": 218
+                            },
+                            {
+                                "data": {
+                                    "fueled": {
+                                        "fuel": 70.483333333333
+                                    }
+                                },
+                                "x": -266,
+                                "prefab": "torch",
+                                "z": 218
+                            },
+                            {
+                                "data": {
+                                    "stackable": {
+                                        "stack": 8
+                                    }
+                                },
+                                "x": -266,
+                                "prefab": "cutgrass",
+                                "z": 218
+                            },
+                            {
+                                "data": {
+                                    "container": {
+                                        "items": [
+                                            {
+                                                "data": {
+                                                    "stackable": {
+                                                        "stack": 4
+                                                    }
+                                                },
+                                                "x": -266,
+                                                "prefab": "turf_carpetfloor2",
+                                                "z": 218
+                                            }
+                                        ]
+                                    },
+                                    "finiteuses": {
+                                        "uses": 393
+                                    }
+                                },
+                                "x": -266,
+                                "prefab": "antlionhat",
+                                "z": 218
+                            }
+                        ]
+                    }
+                },
+                "x": -266,
+                "prefab": "treasurechest",
+                "z": 218
+            },
+            "2": [],
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        {
+            "1": {
+                "data": {
+                    "health": {
+                        "health": 100
+                    }
+                },
+                "x": -267.5,
+                "prefab": "wall_hay",
+                "z": 227.5
+            },
+            "2": [],
+            "relative_x": -5.5,
+            "relative_y": 0,
+            "relative_z": 5.5
+        },
+        {
+            "1": {
+                "x": -262,
+                "prefab": "dl_tileflag",
+                "z": 230
+            },
+            "tile": 261,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        {
+            "1": {
+                "data": {
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Text!",
+                        "userid": "KU_L8KAOObC"
+                    }
+                },
+                "x": -270,
+                "prefab": "homesign",
+                "z": 220
+            },
+            "2": [],
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": -2
+        },
+        {
+            "1": {
+                "data": {
+                    "flowerid": 8,
+                    "wilttime": 4605.6669068709
+                },
+                "x": -270,
+                "prefab": "endtable",
+                "z": 224
+            },
+            "2": [],
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": 2
+        },
+        {
+            "1": {
+                "data": {
+                    "health": {
+                        "health": 63
+                    }
+                },
+                "x": -267.5,
+                "prefab": "wall_hay",
+                "z": 228.5
+            },
+            "2": [],
+            "relative_x": -5.5,
+            "relative_y": 0,
+            "relative_z": 6.5
+        },
+        {
+            "1": {
+                "data": {
+                    "spawner": {
+                        "child": {
+                            "data": {
+                                "perishable": {
+                                    "paused": true,
+                                    "time": 2400
+                                },
+                                "health": {
+                                    "health": 25
+                                },
+                                "knownlocations": {
+                                    "locations": [
+                                        {
+                                            "y": 0,
+                                            "x": -254.63999938965,
+                                            "name": "home",
+                                            "z": 217.02000427246
+                                        }
+                                    ]
+                                }
+                            },
+                            "x": -254.64,
+                            "prefab": "rabbit",
+                            "z": 217.02
+                        }
+                    },
+                    "worldsettingstimer": {
+                        "timers": {
+                            "Spawner_SpawnDelay": {
+                                "timeleft": 0.056249996849025,
+                                "initial_time": 140
+                            }
+                        }
+                    }
+                },
+                "x": -254.64,
+                "prefab": "rabbithole",
+                "z": 217.02
+            },
+            "2": [],
+            "relative_x": 7.3600006103516,
+            "relative_y": 0,
+            "relative_z": -4.9799957275391
+        },
+        {
+            "1": {
+                "data": {
+                    "health": {
+                        "health": 50
+                    }
+                },
+                "x": -267.5,
+                "prefab": "wall_hay",
+                "z": 229.5
+            },
+            "2": [],
+            "relative_x": -5.5,
+            "relative_y": 0,
+            "relative_z": 7.5
+        },
+        {
+            "1": {
+                "data": {
+                    "health": {
+                        "health": 13
+                    }
+                },
+                "x": -267.5,
+                "prefab": "wall_hay",
+                "z": 230.5
+            },
+            "2": [],
+            "relative_x": -5.5,
+            "relative_y": 0,
+            "relative_z": 8.5
+        },
+        {
+            "1": {
+                "x": -254.631,
+                "prefab": "poop",
+                "z": 229.149
+            },
+            "relative_x": 7.3690032958984,
+            "relative_y": 0,
+            "relative_z": 7.1490020751953
+        },
+        {
+            "1": {
+                "data": {
+                    "health": {
+                        "health": 0
+                    }
+                },
+                "x": -267.5,
+                "prefab": "wall_hay",
+                "z": 231.5
+            },
+            "2": [],
+            "relative_x": -5.5,
+            "relative_y": 0,
+            "relative_z": 9.5
+        }
+    ]
+}
