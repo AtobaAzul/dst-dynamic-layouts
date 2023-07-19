@@ -1,20 +1,32 @@
 require "prefabutil"
 require "json"
 
-local io = require("io") --required for file manipulation
+local io = require("io")
 local file_name = TUNING.DL.MODROOT .. "scripts/capture_output.json"
 
 local function CheckValidEntities(inst, reset)
-	--this is likely very not good for performance, but I have no idea how else to iterate a large quatity of prefabs WITHOUT being a findents.
-	-- reset colour
 	for k, v in pairs(Ents) do
 		if v.AnimState ~= nil and v:IsValid() and v:HasTag("DL_VALID") then
 			v.AnimState:SetAddColour(0, 0, 0, 0)
 		end
 	end
 
-	if reset then --reset means it only runs the code above.
+	if reset then 
 		return
+	end
+
+	inst.range = 0
+
+    local itemsinside = inst.components.container:GetAllItems()
+
+	for i, v in ipairs(itemsinside) do
+		if v.prefab == "log" then
+			inst.range = inst.range + v.components.stackable:StackSize()
+		end
+		if v.prefab == "boards" then
+			inst.range = inst.range + (v.components.stackable:StackSize() * TILE_SCALE)
+		end
+		v:AddTag("NOCAPTURE")
 	end
 
 	local x, y, z = inst.Transform:GetWorldPosition()
@@ -23,10 +35,10 @@ local function CheckValidEntities(inst, reset)
 			"walkingplank" }) --gets all valid entities aroiund
 
 
-	for k, v in pairs(ents) do          --if they're truly valid
+	for k, v in pairs(ents) do
 		if v.AnimState ~= nil then
-			v.AnimState:SetAddColour(0, 1, 0, 0) --make them green!
-			v:AddTag("DL_VALID")        --also adds this tag. Needed for the first for loop in this function.
+			v.AnimState:SetAddColour(0, 1, 0, 0)
+			v:AddTag("DL_VALID")
 		end
 	end
 end
@@ -126,7 +138,7 @@ local function Capture(inst, channeler)
 		data = file:write(str)
 		file:close()
 		TheNet:Announce("Successfully captured!")
-		CheckValidEntities(inst, reset) --reset range
+		CheckValidEntities(inst, true) --reset range
 		inst:Remove()
 
 		return data
@@ -154,19 +166,11 @@ local function fn()
 	inst:AddTag("_writeable")
 	inst:AddTag("capturer")
 
-	inst.netrange = net_shortint(inst.GUID, "range", "range_dirty")
-
 	inst.entity:SetPristine()
 
 	if not TheWorld.ismastersim then
 		return inst
 	end
-
-	inst:ListenForEvent("range_dirty", function(inst, data)
-		inst.range = inst.netrange:value() --"isn't this kinda redundant?" you may ask. Well, I'm asking that myself too.
-		CheckValidEntities(inst)
-	end)
-
 
 	inst:AddTag("_writeable")
 
@@ -175,11 +179,11 @@ local function fn()
 	inst:AddComponent("lootdropper")
 
 	inst:AddComponent("container")
-    inst.components.container:WidgetSetup("dl_recorder")
-    inst.components.container.onopenfn = onopen
-    inst.components.container.onclosefn = onclose
-    inst.components.container.skipclosesnd = true
-    inst.components.container.skipopensnd = true
+	inst.components.container:WidgetSetup("dl_recorder")
+	inst.components.container.onopenfn = onopen
+	inst.components.container.onclosefn = onclose
+	inst.components.container.skipclosesnd = true
+	inst.components.container.skipopensnd = true
 
 	inst:AddComponent("workable")
 	inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
@@ -257,19 +261,6 @@ local function TileFlag(inst)
 	inst.OnEntityWake = OnDropped
 
 	return inst
-end
-
--- prints recursively all the contents of tables, and the contents of tables nested within eachother.
-local function DeepPrint(e)
-	-- if e is a table, we should iterate over its elements
-	if type(e) == "table" then
-		for k, v in pairs(e) do -- for every element in the table
-			print(k)
-			DeepPrint(v)  -- recursively repeat the same procedure
-		end
-	else                  -- if not, we can just print it
-		print(e)
-	end
 end
 
 local function SpawnDynamicLayout(inst)
@@ -350,7 +341,6 @@ local function spawnerfn()
 	inst:AddComponent("channelable")
 	inst.components.channelable:SetChannelingFn(SpawnDynamicLayout, OnStopChanneling)
 	inst.components.channelable.use_channel_longaction_noloop = true
-	-- inst.components.channelable.skip_state_stopchanneling = true
 	inst.components.channelable.skip_state_channeling = true
 
 	inst:DoTaskInTime(0, function(inst)
