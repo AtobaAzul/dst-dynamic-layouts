@@ -36,7 +36,7 @@ local function CheckValidEntities(inst, reset)
 
 
 	for k, v in pairs(ents) do
-		if v.AnimState ~= nil then
+		if v.AnimState ~= nil and v ~= inst then
 			v.AnimState:SetAddColour(0, 1, 0, 0)
 			v:AddTag("DL_VALID")
 		end
@@ -102,23 +102,28 @@ local function Capture(inst, channeler)
 	end
 
 	for k, v in ipairs(ents) do
-		local vx, vy, vz = v.Transform:GetWorldPosition()
-		local px, py, pz = vx - x, vy - y, vz - z
+		if v ~= inst then
+			local vx, vy, vz = v.Transform:GetWorldPosition()
+			local px, py, pz = vx - x, vy - y, vz - z
 
-		if saved_ents[text] == nil then
-			saved_ents[text] = {}
+			if saved_ents[text] == nil then
+				saved_ents[text] = {}
+			end
+
+			local thedata = { relative_x = px, relative_y = py, relative_z = pz, v:GetSaveRecord() }
+			if v.prefab == "dl_tileflag" then
+				thedata.tile = TheWorld.Map:GetTileAtPoint(vx, vy, vz)
+				saved_ents[text].has_tiles = true
+			else
+				saved_ents[text].has_tiles = false
+			end
+
+			table.insert(saved_ents[text], thedata)
 		end
-
-		local thedata = { relative_x = px, relative_y = py, relative_z = pz, v:GetSaveRecord() }
-		if v.prefab == "dl_tileflag" then
-			thedata.tile = TheWorld.Map:GetTileAtPoint(vx, vy, vz)
-		end
-
-		table.insert(saved_ents[text], thedata)
 	end
 
 	if file then
-		local file_str = file:read("*a")
+		local file_str = file:read("*a") 
 		local data
 		local file_data = {}
 
@@ -157,7 +162,6 @@ local function fn()
 
 	inst:AddTag("structure")
 	inst:AddTag("chest")
-	inst:AddTag("NOCAPTURE")
 
 	inst.AnimState:SetBank("chest")
 	inst.AnimState:SetBuild("treasure_chest")
@@ -263,16 +267,10 @@ local function TileFlag(inst)
 	return inst
 end
 
+
 local function SpawnDynamicLayout(inst)
 	if inst.components.writeable.text == "" or inst.components.writeable.text == nil then
 		return
-	end
-	local rotx, rotz = 1, 1
-	if math.random() > 0.5 then
-		rotx = -1
-	end
-	if math.random() > 0.5 then
-		rotz = -1
 	end
 
 	local file = io.open(file_name, "r+")
@@ -289,23 +287,55 @@ local function SpawnDynamicLayout(inst)
 			return
 		end
 
+		local has_tiles = data[inst.components.writeable.text].has_tiles
+		local spawninwater = data[inst.components.writeable.text].spawninwater
+		local onlyspawninwater = data[inst.components.writeable.text].onlyspawninwater
+
+		local angles =
+		{
+			0, 45, 90, 135, 180, 225, 270, 315, 360
+		}
+
+		local angles_tiles =
+		{
+			0, 90, 180, 270, 360
+		}
+
+		local theta = not has_tiles and angles[math.random(9)] or angles_tiles[math.random(5)]
+
 		for k, v in pairs(data[inst.components.writeable.text]) do
+			local px = math.cos(theta) * (v.relative_x) - math.sin(theta) * (v.relative_z) + x
+			local pz = math.sin(theta) * (v.relative_x) + math.cos(theta) * (v.relative_z) + z
+
+
 			if v.tile ~= nil then
-				print(v.tile)
-				local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(v.relative_x * rotz + x,
-					v.relative_y + y,
-					v.relative_z * rotz + z)
-				print(tile_x, tile_z)
-				TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
+				print(px, pz)
+
+				local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(px, v.relative_y + y, pz)
+				if not spawninwater and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawninwater then
+					TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
+				end
 			else
-				local nearbyents = TheSim:FindEntities(v.relative_x * rotx + x, v.relative_y + y, v.relative_z * rotz + z,
-					2, nil, { "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable" })
+				local nearbyents = TheSim:FindEntities(v.relative_x + x, v.relative_y + y, v.relative_z + z,
+					2, nil,
+					{ "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable", "player", "playerghost", "companion",
+						"abigail" })
 				for k, v in pairs(nearbyents) do
 					v:Remove()
 				end
-				local prefab = SpawnSaveRecord(v["1"])
-				prefab.Transform:SetPosition(v.relative_x * rotx + x, v.relative_y + y, v.relative_z * rotz + z)
-				prefab:AddTag("noreplaceremove")
+
+				if not spawninwater and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawninwater or onlyspawninwater and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
+					local prefab = SpawnSaveRecord(v["1"])
+
+					if prefab.prefab == "dl_spawner" then
+						if math.random() > 0.95 then
+							prefab:Remove()
+						end
+					end
+
+					prefab.Transform:SetPosition(px, v.relative_y + y, pz)
+					prefab:AddTag("noreplaceremove")
+				end
 			end
 		end
 		inst:Remove()
@@ -322,7 +352,6 @@ local function spawnerfn()
 
 	inst:AddTag("structure")
 	inst:AddTag("chest")
-	inst:AddTag("NOCAPTURE")
 	inst:AddTag("_writeable")
 
 	inst.AnimState:SetBank("chest")
@@ -355,7 +384,7 @@ local function spawnerfn()
 	inst:DoTaskInTime(0, function(inst)
 		local x, y, z = inst.Transform:GetWorldPosition()
 		local tile_x, tile_y, tile_z = TheWorld.Map:GetTileCenterPoint(x, 0, z)
-		inst.Transform:SetPosition(tile_x, tile_y, tile_z)
+		inst.Transform:SetPosition(tile_x, 0, tile_z)
 
 		if inst.layout ~= nil and type(inst.layout) == "string" then
 			inst.components.writeable.text = inst.layout

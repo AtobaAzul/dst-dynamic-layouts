@@ -1,686 +1,301 @@
 {
-    "returnedTable677": [
+    "Part2": [
         {
             "1": {
-                "x": -218,
+                "x": 92,
                 "prefab": "dl_tileflag",
-                "z": 254
+                "z": 132
             },
-            "tile": 10,
-            "relative_x": 0,
+            "tile": 45,
+            "relative_x": 12,
             "relative_y": 0,
-            "relative_z": 0
-        },
-        {
-            "1": {
-                "prefab": "endtable",
-                "x": -219,
-                "data": {
-                    "flowerid": 8,
-                    "wilttime": 4638.3002419062
-                },
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": -1,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "prefab": "wall_wood",
-                "x": -216.5,
-                "data": {
-                    "health": {
-                        "health": 200
-                    }
-                },
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": 1.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "prefab": "wall_wood",
-                "x": -215.5,
-                "data": {
-                    "health": {
-                        "health": 133.33333333333
-                    }
-                },
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": 2.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "x": -221.5,
-                "z": 255.5,
-                "skinname": "fence_pickettan",
-                "skin_id": 409127757,
-                "data": {
-                    "health": {
-                        "health": 1
-                    },
-                    "rot": 2
-                },
-                "prefab": "fence"
-            },
-            "2": [],
-            "relative_x": -3.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "prefab": "wall_wood",
-                "x": -214.5,
-                "data": {
-                    "health": {
-                        "health": 100
-                    }
-                },
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": 3.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "x": -222,
-                "prefab": "dl_tileflag",
-                "z": 254
-            },
-            "tile": 10,
-            "relative_x": -4,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        {
-            "1": {
-                "x": -214,
-                "prefab": "dl_tileflag",
-                "z": 254
-            },
-            "tile": 10,
-            "relative_x": 4,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        {
-            "1": {
-                "x": -218,
-                "prefab": "dl_tileflag",
-                "z": 250
-            },
-            "tile": 10,
-            "relative_x": 0,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "prefab": "sewing_mannequin",
-                "x": -218,
-                "data": {
-                    "savedrotation": {
-                        "rotation": -77.5
-                    },
-                    "inventory": {
-                        "items": [],
-                        "equip": {
-                            "hands": {
-                                "x": -218,
-                                "prefab": "sword_lunarplant",
-                                "z": 250
-                            },
-                            "head": {
-                                "x": -218,
-                                "prefab": "lunarplanthat",
-                                "z": 250
-                            },
-                            "body": {
-                                "x": -218,
-                                "prefab": "armor_lunarplant",
-                                "z": 250
-                            }
-                        }
-                    }
-                },
-                "z": 250
-            },
-            "2": [],
-            "relative_x": 0,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "prefab": "wall_wood",
-                "x": -213.5,
-                "data": {
-                    "health": {
-                        "health": 33.333333333333
-                    }
-                },
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": 4.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "x": -222.5,
-                "z": 255.5,
-                "skinname": "fence_gate_pickettan",
-                "skin_id": 459952621,
-                "data": {
-                    "offsetdoor": false,
-                    "rot": 2,
-                    "health": {
-                        "health": 1
-                    },
-                    "isopen": true
-                },
-                "prefab": "fence_gate"
-            },
-            "2": [],
-            "relative_x": -4.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "x": -214,
-                "prefab": "dl_tileflag",
-                "z": 250
-            },
-            "tile": 10,
-            "relative_x": 4,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "x": -222,
-                "prefab": "dl_tileflag",
-                "z": 250
-            },
-            "tile": 10,
-            "relative_x": -4,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "prefab": "treasurechest",
-                "x": -214,
-                "data": {
-                    "container": {
-                        "items": [
-                            {
-                                "prefab": "greenstaff",
-                                "x": -214,
-                                "data": {
-                                    "finiteuses": {
-                                        "uses": 2.5
-                                    }
-                                },
-                                "z": 250
-                            },
-                            {
-                                "prefab": "pigskin",
-                                "x": -214,
-                                "data": {
-                                    "stackable": {
-                                        "stack": 3
-                                    }
-                                },
-                                "z": 250
-                            },
-                            {
-                                "prefab": "oceanfishingrod",
-                                "x": -214,
-                                "data": {
-                                    "container": {
-                                        "items": [
-                                            {
-                                                "x": -214,
-                                                "prefab": "oceanfishingbobber_canary",
-                                                "z": 250
-                                            },
-                                            {
-                                                "x": -214,
-                                                "prefab": "oceanfishinglure_spinner_green",
-                                                "z": 250
-                                            }
-                                        ]
-                                    }
-                                },
-                                "z": 250
-                            },
-                            {
-                                "x": -214,
-                                "z": 250,
-                                "skinname": "fence_pickettan_item",
-                                "skin_id": 1803387611,
-                                "data": {
-                                    "stackable": {
-                                        "stack": 4
-                                    }
-                                },
-                                "prefab": "fence_item"
-                            }
-                        ]
-                    }
-                },
-                "z": 250
-            },
-            "2": [],
-            "relative_x": 4,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "prefab": "treasurechest",
-                "x": -222,
-                "data": {
-                    "burnt": true
-                },
-                "z": 250
-            },
-            "2": [],
-            "relative_x": -4,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "x": -223.5,
-                "z": 255.5,
-                "skinname": "fence_pickettan",
-                "skin_id": 409127757,
-                "data": {
-                    "health": {
-                        "health": 1
-                    },
-                    "rot": 2
-                },
-                "prefab": "fence"
-            },
-            "2": [],
-            "relative_x": -5.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "prefab": "wall_wood",
-                "x": -212.5,
-                "data": {
-                    "health": {
-                        "health": 0
-                    }
-                },
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": 5.5,
-            "relative_y": 0,
-            "relative_z": 1.5
+            "relative_z": 0,
+            "spawninwater": false,
+            "has_tiles": true
         }
     ],
-    "TestSetpiece": [
+    "Part1": [
         {
             "1": {
-                "x": -218,
+                "x": 18,
                 "prefab": "dl_tileflag",
-                "z": 254
+                "z": 90
             },
-            "tile": 10,
-            "relative_x": 0,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        {
-            "1": {
-                "data": {
-                    "flowerid": 8,
-                    "wilttime": 4652.8335759975
-                },
-                "x": -219,
-                "prefab": "endtable",
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": -1,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "data": {
-                    "health": {
-                        "health": 200
-                    }
-                },
-                "x": -216.5,
-                "prefab": "wall_wood",
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": 1.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "data": {
-                    "health": {
-                        "health": 133.33333333333
-                    }
-                },
-                "x": -215.5,
-                "prefab": "wall_wood",
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": 2.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "x": -221.5,
-                "z": 255.5,
-                "skinname": "fence_pickettan",
-                "data": {
-                    "rot": 2,
-                    "health": {
-                        "health": 1
-                    }
-                },
-                "prefab": "fence",
-                "skin_id": 409127757
-            },
-            "2": [],
-            "relative_x": -3.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "data": {
-                    "health": {
-                        "health": 100
-                    }
-                },
-                "x": -214.5,
-                "prefab": "wall_wood",
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": 3.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "x": -222,
-                "prefab": "dl_tileflag",
-                "z": 254
-            },
-            "tile": 10,
-            "relative_x": -4,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        {
-            "1": {
-                "x": -214,
-                "prefab": "dl_tileflag",
-                "z": 254
-            },
-            "tile": 10,
-            "relative_x": 4,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        {
-            "1": {
-                "x": -218,
-                "prefab": "dl_tileflag",
-                "z": 250
-            },
-            "tile": 10,
+            "tile": 2,
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": -4
         },
         {
             "1": {
+                "x": 14,
+                "prefab": "dl_tileflag",
+                "z": 90
+            },
+            "tile": 2,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        {
+            "1": {
+                "x": 22,
+                "prefab": "dl_tileflag",
+                "z": 90
+            },
+            "tile": 2,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        {
+            "1": {
+                "x": 18,
+                "prefab": "dl_tileflag",
+                "z": 86
+            },
+            "tile": 2,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        {
+            "1": {
+                "x": 14,
+                "prefab": "dl_tileflag",
+                "z": 86
+            },
+            "tile": 2,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        {
+            "1": {
+                "x": 22,
+                "prefab": "dl_tileflag",
+                "z": 86
+            },
+            "tile": 2,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        {
+            "1": {
+                "x": 18,
+                "prefab": "dl_tileflag",
+                "z": 82
+            },
+            "tile": 2,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -12
+        },
+        {
+            "1": {
+                "x": 14,
+                "prefab": "dl_tileflag",
+                "z": 82
+            },
+            "tile": 2,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -12
+        },
+        {
+            "1": {
+                "x": 22,
+                "prefab": "dl_tileflag",
+                "z": 82
+            },
+            "tile": 2,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -12
+        },
+        {
+            "1": {
+                "x": 18,
+                "prefab": "dl_tileflag",
+                "z": 78
+            },
+            "tile": 2,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -16
+        },
+        {
+            "1": {
+                "x": 14,
+                "prefab": "dl_tileflag",
+                "z": 78
+            },
+            "tile": 2,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -16
+        },
+        {
+            "1": {
+                "x": 22,
+                "prefab": "dl_tileflag",
+                "z": 78
+            },
+            "tile": 2,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -16
+        },
+        {
+            "1": {
+                "x": 18,
+                "prefab": "dl_tileflag",
+                "z": 74
+            },
+            "tile": 2,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -20
+        },
+        {
+            "1": {
+                "x": 14,
+                "prefab": "dl_tileflag",
+                "z": 74
+            },
+            "tile": 2,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -20
+        },
+        {
+            "1": {
+                "x": 22,
+                "prefab": "dl_tileflag",
+                "z": 74
+            },
+            "tile": 2,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -20
+        },
+        {
+            "1": {
+                "x": 18,
+                "prefab": "dl_tileflag",
+                "z": 70
+            },
+            "tile": 2,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -24
+        },
+        {
+            "1": {
+                "x": 14,
+                "prefab": "dl_tileflag",
+                "z": 70
+            },
+            "tile": 2,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -24
+        },
+        {
+            "1": {
+                "x": 22,
+                "prefab": "dl_tileflag",
+                "z": 70
+            },
+            "tile": 2,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -24
+        },
+        {
+            "1": {
+                "x": 18,
+                "prefab": "dl_tileflag",
+                "z": 66
+            },
+            "tile": 2,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -28
+        },
+        {
+            "1": {
+                "x": 14,
+                "prefab": "dl_tileflag",
+                "z": 66
+            },
+            "tile": 2,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -28
+        },
+        {
+            "1": {
+                "x": 22,
+                "prefab": "dl_tileflag",
+                "z": 66
+            },
+            "tile": 2,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -28
+        },
+        {
+            "1": {
+                "x": 18,
+                "prefab": "dl_tileflag",
+                "z": 62
+            },
+            "tile": 2,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -32
+        },
+        {
+            "1": {
+                "x": 14,
+                "prefab": "dl_tileflag",
+                "z": 62
+            },
+            "tile": 2,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -32
+        },
+        {
+            "1": {
+                "x": 22,
+                "prefab": "dl_tileflag",
+                "z": 62
+            },
+            "tile": 2,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -32
+        },
+        {
+            "1": {
                 "data": {
-                    "savedrotation": {
-                        "rotation": -77.5
-                    },
-                    "inventory": {
-                        "items": [],
-                        "equip": {
-                            "hands": {
-                                "x": -218,
-                                "prefab": "sword_lunarplant",
-                                "z": 250
-                            },
-                            "body": {
-                                "x": -218,
-                                "prefab": "armor_lunarplant",
-                                "z": 250
-                            },
-                            "head": {
-                                "x": -218,
-                                "prefab": "lunarplanthat",
-                                "z": 250
-                            }
-                        }
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Part1",
+                        "userid": "KU_L8KAOObC"
                     }
                 },
-                "x": -218,
-                "prefab": "sewing_mannequin",
-                "z": 250
+                "x": 18,
+                "prefab": "dl_spawner",
+                "z": 58
             },
             "2": [],
             "relative_x": 0,
             "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "data": {
-                    "health": {
-                        "health": 33.333333333333
-                    }
-                },
-                "x": -213.5,
-                "prefab": "wall_wood",
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": 4.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "x": -222.5,
-                "z": 255.5,
-                "skinname": "fence_gate_pickettan",
-                "data": {
-                    "health": {
-                        "health": 1
-                    },
-                    "isopen": true,
-                    "rot": 2,
-                    "offsetdoor": false
-                },
-                "prefab": "fence_gate",
-                "skin_id": 459952621
-            },
-            "2": [],
-            "relative_x": -4.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "x": -214,
-                "prefab": "dl_tileflag",
-                "z": 250
-            },
-            "tile": 10,
-            "relative_x": 4,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "x": -222,
-                "prefab": "dl_tileflag",
-                "z": 250
-            },
-            "tile": 10,
-            "relative_x": -4,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "data": {
-                    "container": {
-                        "items": [
-                            {
-                                "data": {
-                                    "finiteuses": {
-                                        "uses": 2.5
-                                    }
-                                },
-                                "x": -214,
-                                "prefab": "greenstaff",
-                                "z": 250
-                            },
-                            {
-                                "data": {
-                                    "stackable": {
-                                        "stack": 3
-                                    }
-                                },
-                                "x": -214,
-                                "prefab": "pigskin",
-                                "z": 250
-                            },
-                            {
-                                "data": {
-                                    "container": {
-                                        "items": [
-                                            {
-                                                "x": -214,
-                                                "prefab": "oceanfishingbobber_canary",
-                                                "z": 250
-                                            },
-                                            {
-                                                "x": -214,
-                                                "prefab": "oceanfishinglure_spinner_green",
-                                                "z": 250
-                                            }
-                                        ]
-                                    }
-                                },
-                                "x": -214,
-                                "prefab": "oceanfishingrod",
-                                "z": 250
-                            },
-                            {
-                                "x": -214,
-                                "z": 250,
-                                "skinname": "fence_pickettan_item",
-                                "data": {
-                                    "stackable": {
-                                        "stack": 4
-                                    }
-                                },
-                                "prefab": "fence_item",
-                                "skin_id": 1803387611
-                            }
-                        ]
-                    }
-                },
-                "x": -214,
-                "prefab": "treasurechest",
-                "z": 250
-            },
-            "2": [],
-            "relative_x": 4,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "data": {
-                    "burnt": true
-                },
-                "x": -222,
-                "prefab": "treasurechest",
-                "z": 250
-            },
-            "2": [],
-            "relative_x": -4,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        {
-            "1": {
-                "x": -223.5,
-                "z": 255.5,
-                "skinname": "fence_pickettan",
-                "data": {
-                    "rot": 2,
-                    "health": {
-                        "health": 1
-                    }
-                },
-                "prefab": "fence",
-                "skin_id": 409127757
-            },
-            "2": [],
-            "relative_x": -5.5,
-            "relative_y": 0,
-            "relative_z": 1.5
-        },
-        {
-            "1": {
-                "data": {
-                    "health": {
-                        "health": 0
-                    }
-                },
-                "x": -212.5,
-                "prefab": "wall_wood",
-                "z": 255.5
-            },
-            "2": [],
-            "relative_x": 5.5,
-            "relative_y": 0,
-            "relative_z": 1.5
+            "relative_z": -36
         }
     ]
 }
