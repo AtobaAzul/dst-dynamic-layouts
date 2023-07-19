@@ -158,4 +158,4 @@ local function makefn()
     return inst
 end
 
-return Prefab("ums_biometable", makefn)
+return Prefab("dl_biometable", makefn)
