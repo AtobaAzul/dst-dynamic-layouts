@@ -325,7 +325,7 @@ local function SpawnDynamicLayout(inst)
 
 		for k, v in pairs(data[inst.components.writeable.text]) do
 			if type(v) == "table" then
-				local px = math.cos(angle) * (v.relative_x) - math.sin(angle) * (v.relative_z) + x
+				local px = math.cos(angle) * (v.relative_x) - math.sin(angle) * (v.relative_z) + x --huge thanks to KorenWaffles for helping with math. because MAN I suck at it.
 				local pz = math.sin(angle) * (v.relative_x) + math.cos(angle) * (v.relative_z) + z
 
 				if v.tile ~= nil then
