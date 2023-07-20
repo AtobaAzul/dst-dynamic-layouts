@@ -266,7 +266,6 @@ local function TileFlag(inst)
 	return inst
 end
 
-
 local function SpawnDynamicLayout(inst)
 	if inst.components.writeable.text == "" or inst.components.writeable.text == nil then
 		return
@@ -290,20 +289,29 @@ local function SpawnDynamicLayout(inst)
 		local spawninwater = data[inst.components.writeable.text].spawninwater
 		local onlyspawninwater = data[inst.components.writeable.text].onlyspawninwater
 		local angles
-		if has_tiles then
-			angles = { 0, 90, 180, 270, 360 }
-		else
-			angles = { 0, 45, 90, 135, 180, 225, 270, 315, 360 }
-		end
+		--if has_tiles then
+		--	angles = { 90, 135, 270, 315 } --HELP i don't know anymore AAAAAAAAAAAAAAA
+		--else
+			angles = {0, 90, 180, 225, 270, 315,360}
+		--end
+		local theangle = math.random(360)
+		print(theangle)
 
-		print(has_tiles)
+		local degangle = math.deg(theangle)
+		print(degangle)
+
+		local radangle = math.rad(theangle)
+		print(radangle)
+
+		local degradangle = math.rad(degangle)
+		print(degradangle)
+
+		local angle = radangle
+
 		for k, v in pairs(data[inst.components.writeable.text]) do
 			if type(v) == "table" then
-				--while this iteration was cool, precision errors make this wildly innacurate for what I need it for.
-				local px = math.cos(angles[math.random(#angles)] * RADIANS) * (v.relative_x) - math.sin(angles[math.random(#angles)] * RADIANS) * (v.relative_z) + x
-				local pz = -math.sin(angles[math.random(#angles)] * RADIANS) * (v.relative_x) + math.cos(angles[math.random(#angles)] * RADIANS) * (v.relative_z) + z
-
-
+				local px = math.cos(angle) * (v.relative_x + x - x) - math.sin(angle) * (v.relative_z + z - z) + x
+				local pz = math.sin(angle) * (v.relative_x + x - x) + math.cos(angle) * (v.relative_x + z - z) + z
 
 
 				if v.tile ~= nil then
@@ -325,9 +333,7 @@ local function SpawnDynamicLayout(inst)
 						local prefab = SpawnSaveRecord(v["1"])
 
 						if prefab.prefab == "dl_spawner" then
-							if math.random() > 0.95 then
-								prefab:Remove()
-							end
+							prefab:Remove()
 						end
 
 						prefab.Transform:SetPosition(px, v.relative_y + y, pz)

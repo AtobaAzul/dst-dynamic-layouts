@@ -1,1 +1,158 @@
-{"Part2":[{"1":{"x":92,"prefab":"dl_tileflag","z":132},"relative_z":0,"tile":45,"has_tiles":true,"spawninwater":false,"relative_y":0,"relative_x":12}],"Part1":{"1":{"1":{"x":-370,"prefab":"dl_tileflag","z":126},"tile":262,"relative_x":0,"relative_y":0,"relative_z":0},"2":{"1":{"x":-374,"prefab":"dl_tileflag","z":126},"tile":262,"relative_x":-4,"relative_y":0,"relative_z":0},"3":{"1":{"x":-378,"prefab":"dl_tileflag","z":126},"tile":262,"relative_x":-8,"relative_y":0,"relative_z":0},"4":{"1":{"x":-382,"prefab":"dl_tileflag","z":126},"tile":262,"relative_x":-12,"relative_y":0,"relative_z":0},"5":{"1":{"x":-386,"prefab":"dl_tileflag","z":126},"tile":262,"relative_x":-16,"relative_y":0,"relative_z":0},"6":{"1":{"x":-390,"prefab":"dl_tileflag","z":126},"tile":262,"relative_x":-20,"relative_y":0,"relative_z":0},"7":{"1":{"x":-394,"prefab":"dl_tileflag","z":126},"tile":262,"relative_x":-24,"relative_y":0,"relative_z":0},"8":{"1":{"x":-398,"prefab":"dl_tileflag","z":126},"tile":262,"relative_x":-28,"relative_y":0,"relative_z":0},"9":{"1":{"x":-368.25,"prefab":"moose_nesting_ground","z":94.43},"relative_x":1.75,"relative_y":0,"relative_z":-31.569999694824},"10":{"1":{"x":-402,"prefab":"dl_tileflag","z":126},"tile":262,"relative_x":-32,"relative_y":0,"relative_z":0},"11":{"1":{"data":{"writeable":{"netid":"76561198830730990","text":"Part1","userid":"KU_L8KAOObC"}},"x":-406,"prefab":"dl_spawner","z":126},"2":[],"relative_x":-36,"relative_y":0,"relative_z":0},"12":{"1":{"x":-406,"prefab":"dl_tileflag","z":126},"tile":262,"relative_x":-36,"relative_y":0,"relative_z":0},"has_tiles":true}}
+{
+    "Part2": [
+        {
+            "1": {
+                "x": 92,
+                "prefab": "dl_tileflag",
+                "z": 132
+            },
+            "relative_z": 0,
+            "tile": 45,
+            "has_tiles": true,
+            "spawninwater": false,
+            "relative_y": 0,
+            "relative_x": 12
+        }
+    ],
+    "Part1": {
+        "1": {
+            "1": {
+                "x": -370,
+                "prefab": "dl_tileflag",
+                "z": 126
+            },
+            "tile": 262,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "2": {
+            "1": {
+                "x": -374,
+                "prefab": "dl_tileflag",
+                "z": 126
+            },
+            "tile": 262,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "3": {
+            "1": {
+                "x": -378,
+                "prefab": "dl_tileflag",
+                "z": 126
+            },
+            "tile": 262,
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "4": {
+            "1": {
+                "x": -382,
+                "prefab": "dl_tileflag",
+                "z": 126
+            },
+            "tile": 262,
+            "relative_x": -12,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "5": {
+            "1": {
+                "x": -386,
+                "prefab": "dl_tileflag",
+                "z": 126
+            },
+            "tile": 262,
+            "relative_x": -16,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "6": {
+            "1": {
+                "x": -390,
+                "prefab": "dl_tileflag",
+                "z": 126
+            },
+            "tile": 262,
+            "relative_x": -20,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "7": {
+            "1": {
+                "x": -394,
+                "prefab": "dl_tileflag",
+                "z": 126
+            },
+            "tile": 262,
+            "relative_x": -24,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "8": {
+            "1": {
+                "x": -398,
+                "prefab": "dl_tileflag",
+                "z": 126
+            },
+            "tile": 262,
+            "relative_x": -28,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "9": {
+            "1": {
+                "x": -368.25,
+                "prefab": "moose_nesting_ground",
+                "z": 94.43
+            },
+            "relative_x": 1.75,
+            "relative_y": 0,
+            "relative_z": -31.569999694824
+        },
+        "10": {
+            "1": {
+                "x": -402,
+                "prefab": "dl_tileflag",
+                "z": 126
+            },
+            "tile": 262,
+            "relative_x": -32,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "11": {
+            "1": {
+                "data": {
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Part1",
+                        "userid": "KU_L8KAOObC"
+                    }
+                },
+                "x": -406,
+                "prefab": "dl_spawner",
+                "z": 126
+            },
+            "2": [],
+            "relative_x": -36,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "12": {
+            "1": {
+                "x": -406,
+                "prefab": "dl_tileflag",
+                "z": 126
+            },
+            "tile": 262,
+            "relative_x": -36,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "has_tiles": true
+    }
+}
