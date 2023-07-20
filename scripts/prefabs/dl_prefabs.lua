@@ -109,13 +109,12 @@ local function Capture(inst, channeler)
 			if saved_ents[text] == nil then
 				saved_ents[text] = {}
 			end
+			saved_ents[text].has_tiles = false
 
 			local thedata = { relative_x = px, relative_y = py, relative_z = pz, v:GetSaveRecord() }
 			if v.prefab == "dl_tileflag" then
 				thedata.tile = TheWorld.Map:GetTileAtPoint(vx, vy, vz)
 				saved_ents[text].has_tiles = true
-			else
-				saved_ents[text].has_tiles = false
 			end
 
 			table.insert(saved_ents[text], thedata)
@@ -123,7 +122,7 @@ local function Capture(inst, channeler)
 	end
 
 	if file then
-		local file_str = file:read("*a") 
+		local file_str = file:read("*a")
 		local data
 		local file_data = {}
 
@@ -290,51 +289,50 @@ local function SpawnDynamicLayout(inst)
 		local has_tiles = data[inst.components.writeable.text].has_tiles
 		local spawninwater = data[inst.components.writeable.text].spawninwater
 		local onlyspawninwater = data[inst.components.writeable.text].onlyspawninwater
+		local angles
+		if has_tiles then
+			angles = { 0, 90, 180, 270, 360 }
+		else
+			angles = { 0, 45, 90, 135, 180, 225, 270, 315, 360 }
+		end
 
-		local angles =
-		{
-			0, 45, 90, 135, 180, 225, 270, 315, 360
-		}
-
-		local angles_tiles =
-		{
-			0, 90, 180, 270, 360
-		}
-
-		local theta = not has_tiles and angles[math.random(9)] or angles_tiles[math.random(5)]
-
+		print(has_tiles)
 		for k, v in pairs(data[inst.components.writeable.text]) do
-			local px = math.cos(theta) * (v.relative_x) - math.sin(theta) * (v.relative_z) + x
-			local pz = math.sin(theta) * (v.relative_x) + math.cos(theta) * (v.relative_z) + z
+			if type(v) == "table" then
+				--while this iteration was cool, precision errors make this wildly innacurate for what I need it for.
+				local px = math.cos(angles[math.random(#angles)] * RADIANS) * (v.relative_x) - math.sin(angles[math.random(#angles)] * RADIANS) * (v.relative_z) + x
+				local pz = -math.sin(angles[math.random(#angles)] * RADIANS) * (v.relative_x) + math.cos(angles[math.random(#angles)] * RADIANS) * (v.relative_z) + z
 
 
-			if v.tile ~= nil then
-				print(px, pz)
 
-				local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(px, v.relative_y + y, pz)
-				if not spawninwater and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawninwater then
-					TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
-				end
-			else
-				local nearbyents = TheSim:FindEntities(v.relative_x + x, v.relative_y + y, v.relative_z + z,
-					2, nil,
-					{ "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable", "player", "playerghost", "companion",
-						"abigail" })
-				for k, v in pairs(nearbyents) do
-					v:Remove()
-				end
 
-				if not spawninwater and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawninwater or onlyspawninwater and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
-					local prefab = SpawnSaveRecord(v["1"])
-
-					if prefab.prefab == "dl_spawner" then
-						if math.random() > 0.95 then
-							prefab:Remove()
-						end
+				if v.tile ~= nil then
+					local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(px, v.relative_y + y, pz)
+					if not spawninwater and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawninwater then
+						TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
+					end
+				else
+					local nearbyents = TheSim:FindEntities(v.relative_x + x, v.relative_y + y, v.relative_z + z,
+						2, nil,
+						{ "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable", "player", "playerghost",
+							"companion",
+							"abigail" })
+					for k, v in pairs(nearbyents) do
+						v:Remove()
 					end
 
-					prefab.Transform:SetPosition(px, v.relative_y + y, pz)
-					prefab:AddTag("noreplaceremove")
+					if not spawninwater and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawninwater or onlyspawninwater and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
+						local prefab = SpawnSaveRecord(v["1"])
+
+						if prefab.prefab == "dl_spawner" then
+							if math.random() > 0.95 then
+								prefab:Remove()
+							end
+						end
+
+						prefab.Transform:SetPosition(px, v.relative_y + y, pz)
+						prefab:AddTag("noreplaceremove")
+					end
 				end
 			end
 		end
