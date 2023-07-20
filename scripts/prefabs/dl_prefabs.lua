@@ -4,6 +4,20 @@ require "json"
 local io = require("io")
 local file_name = TUNING.DL.MODROOT .. "scripts/capture_output.json"
 
+local NO_CAPTURE_TAGS =
+{
+	"NOCAPTURE",
+	"player",
+	"bird",
+	"NOCLICK",
+	"CLASSIFIED",
+	"FX",
+	"INLIMBO",
+	"smalloceancreature",
+	"DECOR",
+	"walkingplank"
+}
+
 local function CheckValidEntities(inst, reset)
 	for k, v in pairs(Ents) do
 		if v.AnimState ~= nil and v:IsValid() and v:HasTag("DL_VALID") then
@@ -30,10 +44,7 @@ local function CheckValidEntities(inst, reset)
 	end
 
 	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = TheSim:FindEntities(x, y, z, inst.range, nil,
-		{ "NOCAPTURE", "player", "bird", "NOCLICK", "CLASSIFIED", "FX", "INLIMBO", "smalloceancreature", "DECOR",
-			"walkingplank" }) --gets all valid entities aroiund
-
+	local ents = TheSim:FindEntities(x, y, z, inst.range, nil, NO_CAPTURE_TAGS)
 
 	for k, v in pairs(ents) do
 		if v.AnimState ~= nil and v ~= inst then
@@ -83,8 +94,7 @@ end
 local function Capture(inst, channeler)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	local itemsinside = inst.components.container:GetAllItems()
-	local ents = TheSim:FindEntities(x, y, z, inst.range, nil,
-		{ "NOCAPTURE", "player", "bird", "NOCLICK", "CLASSIFIED", "FX", "INLIMBO", "smalloceancreature", "DECOR" })
+	local ents = TheSim:FindEntities(x, y, z, inst.range, nil, NO_CAPTURE_TAGS)
 	local saved_ents = {}
 	local num = tostring(math.random(1000))
 	local text = (inst.components.writeable.text == nil and "returnedTable" .. num) or
@@ -109,12 +119,18 @@ local function Capture(inst, channeler)
 			if saved_ents[text] == nil then
 				saved_ents[text] = {}
 			end
+
 			saved_ents[text].has_tiles = false
+			saved_ents[text].spawn_in_water = false
+			saved_ents[text].only_spawn_in_water = false
+			saved_ents[text].smooth_rorate = false
+			saved_ents[text].no_rotation = false
 
 			local thedata = { relative_x = px, relative_y = py, relative_z = pz, v:GetSaveRecord() }
 			if v.prefab == "dl_tileflag" then
 				thedata.tile = TheWorld.Map:GetTileAtPoint(vx, vy, vz)
 				saved_ents[text].has_tiles = true
+				saved_ents[text].spawn_in_water = true
 			end
 
 			table.insert(saved_ents[text], thedata)
@@ -286,55 +302,50 @@ local function SpawnDynamicLayout(inst)
 		end
 
 		local has_tiles = data[inst.components.writeable.text].has_tiles
-		local spawninwater = data[inst.components.writeable.text].spawninwater
-		local onlyspawninwater = data[inst.components.writeable.text].onlyspawninwater
-		local angles
-		--if has_tiles then
-		--	angles = { 90, 135, 270, 315 } --HELP i don't know anymore AAAAAAAAAAAAAAA
-		--else
-			angles = {0, 90, 180, 225, 270, 315,360}
-		--end
-		local theangle = math.random(360)
-		print(theangle)
+		local spawn_in_water = data[inst.components.writeable.text].spawn_in_water
+		local only_spawn_in_water = data[inst.components.writeable.text].only_spawn_in_water
+		local smooth_rorate = data[inst.components.writeable.text].smooth_rotate
+		local no_rotation = data[inst.components.writeable.text].no_rotation
+		local angles, angle
 
-		local degangle = math.deg(theangle)
-		print(degangle)
+		if has_tiles then
+			angles = { 0, 90, 180, 270, 360 }
+		end
 
-		local radangle = math.rad(theangle)
-		print(radangle)
+		if no_rotation then
+			angle = 0
+		elseif smooth_rorate then
+			angle = math.random(360)
+		else
+			angle = math.rad(angles[math.random(#angles)])
+		end
 
-		local degradangle = math.rad(degangle)
-		print(degradangle)
-
-		local angle = radangle
+		local angle = angle
 
 		for k, v in pairs(data[inst.components.writeable.text]) do
 			if type(v) == "table" then
-				local px = math.cos(angle) * (v.relative_x + x - x) - math.sin(angle) * (v.relative_z + z - z) + x
-				local pz = math.sin(angle) * (v.relative_x + x - x) + math.cos(angle) * (v.relative_x + z - z) + z
-
+				local px = math.cos(angle) * (v.relative_x) - math.sin(angle) * (v.relative_z) + x
+				local pz = math.sin(angle) * (v.relative_x) + math.cos(angle) * (v.relative_z) + z
 
 				if v.tile ~= nil then
 					local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(px, v.relative_y + y, pz)
-					if not spawninwater and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawninwater then
+					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water then
 						TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
 					end
 				else
-					local nearbyents = TheSim:FindEntities(v.relative_x + x, v.relative_y + y, v.relative_z + z,
-						2, nil,
+					local nearbyents = TheSim:FindEntities(v.relative_x + x, v.relative_y + y, v.relative_z + z, 2, nil,
 						{ "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable", "player", "playerghost",
-							"companion",
-							"abigail" })
+							"companion", "abigail" })
 					for k, v in pairs(nearbyents) do
 						v:Remove()
 					end
 
-					if not spawninwater and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawninwater or onlyspawninwater and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
+					if
+						not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or
+						spawn_in_water or
+						only_spawn_in_water and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz)
+					then
 						local prefab = SpawnSaveRecord(v["1"])
-
-						if prefab.prefab == "dl_spawner" then
-							prefab:Remove()
-						end
 
 						prefab.Transform:SetPosition(px, v.relative_y + y, pz)
 						prefab:AddTag("noreplaceremove")
@@ -402,5 +413,4 @@ local function spawnerfn()
 	return inst
 end
 
-return Prefab("dl_recorder", fn), -- Version 1.0
-	Prefab("dl_tileflag", TileFlag), Prefab("dl_spawner", spawnerfn)
+return Prefab("dl_recorder", fn), Prefab("dl_tileflag", TileFlag), Prefab("dl_spawner", spawnerfn) -- Version 1.0

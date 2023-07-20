@@ -9,7 +9,7 @@
             "relative_z": 0,
             "tile": 45,
             "has_tiles": true,
-            "spawninwater": false,
+            "spawn_in_water": false,
             "relative_y": 0,
             "relative_x": 12
         }
