@@ -1,66 +1,70 @@
-require "prefabutil"
-require "json"
+require "prefabutil" 
+require "json" --required for the json sheneniganery.
 
-local io = require("io")
-local file_name = TUNING.DL.MODROOT .. "scripts/capture_output.json"
+local io = require("io") --required for the file manipulation things
+local output_file = TUNING.DL.MODROOT .. "scripts/capture_output.json" --the file wheere captured prefags will be recorded to.
 
-local NO_CAPTURE_TAGS =
+local NO_CAPTURE_TAGS = --all the tags that shouldn't be captured
 {
-	"NOCAPTURE",
-	"player",
-	"bird",
-	"NOCLICK",
-	"CLASSIFIED",
-	"FX",
-	"INLIMBO",
-	"smalloceancreature",
-	"DECOR",
-	"walkingplank"
+	"NOCAPTURE", --this includes the capturer itself
+	"player", --players
+	"bird", --hecking birds man
+	"NOCLICK", --stuff you can't click
+	"CLASSIFIED", --stuff you can't see
+	"FX", --FX, usually temporary stuff
+	"INLIMBO", --stuff like items inside containers. so they don't get registered twice. Among other things.
+	"smalloceancreature", --hecking fishes man.
+	"DECOR", 
 }
 
-local function CheckValidEntities(inst, reset)
-	for k, v in pairs(Ents) do
+--this function checks for valid entitites, highlights them green and returns them.
+local function CheckAndGetValidEntities(inst, reset)
+	for k, v in pairs(Ents) do --iterates over all entitites to clear the highlighting on existing things.
 		if v.AnimState ~= nil and v:IsValid() and v:HasTag("DL_VALID") then
 			v.AnimState:SetAddColour(0, 0, 0, 0)
 		end
 	end
 
 	if reset == true then --"itemget" event pushes the second param as some table. Need to do explicit true check
-		return
+		return			  --reset param is for resetting the highlighting only.
 	end
 
-	inst.range = 0
+	inst.range = 0 
 
-	local itemsinside = inst.components.container:GetAllItems()
+	local itemsinside = inst.components.container:GetAllItems() --get all items inside 
 
-	for i, v in ipairs(itemsinside) do
-		if v.prefab == "log" then
+	for i, v in ipairs(itemsinside) do--iterate over all of them...
+		if v.prefab == "log" then --if it's a log, increase range by 1 of each in the stack.
 			inst.range = inst.range + v.components.stackable:StackSize()
 		end
-		if v.prefab == "boards" then
+		if v.prefab == "boards" then --if it's a log, increase it by 4.
 			inst.range = inst.range + (v.components.stackable:StackSize() * TILE_SCALE)
 		end
-		v:AddTag("NOCAPTURE")
+		v:AddTag("NOCAPTURE") --add the "NOCAPTURE" tag just to be safe.
 	end
 
 	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = TheSim:FindEntities(x, y, z, inst.range, nil, NO_CAPTURE_TAGS)
+	local ents = TheSim:FindEntities(x, y, z, inst.range, nil, NO_CAPTURE_TAGS)--find all entities around
 
 	for k, v in pairs(ents) do
-		if v.AnimState ~= nil and v ~= inst then
-			v.AnimState:SetAddColour(0, 1, 0, 0)
-			v:AddTag("DL_VALID")
+		if v.AnimState ~= nil and v ~= inst then--if they're valid
+			v.AnimState:SetAddColour(0, 1, 0, 0) --highlight them green!
+			v:AddTag("DL_VALID") --and add this tag, for use in the first for loop above.
 		end
 	end
+
+	return ents --and return the entities so we can use this function to shorten some code in the Capture function below
 end
 
+
+--some main cosmetic functions, but also includes checking valid entities
 local function onopen(inst)
 	if not inst:HasTag("burnt") then
 		inst.AnimState:PlayAnimation("open")
 		inst.SoundEmitter:PlaySound("dontstarve/wilson/chest_open")
 	end
 
-	CheckValidEntities(inst)
+	CheckAndGetValidEntities(inst)
 end
 
 local function onclose(inst)
@@ -70,9 +74,10 @@ local function onclose(inst)
 		inst.SoundEmitter:PlaySound("dontstarve/wilson/chest_close")
 	end
 
-	CheckValidEntities(inst)
+	CheckAndGetValidEntities(inst)
 end
 
+--remove itself if it gets hammered.
 local function onhammered(inst, worker)
 	inst:Remove()
 end
@@ -81,6 +86,7 @@ local function onhit(inst, worker)
 	inst:Remove()
 end
 
+--I'm pretty sure this goes unused.
 local function onbuilt(inst)
 	inst.AnimState:PlayAnimation("place")
 	inst.AnimState:PushAnimation("closed", false)
@@ -91,54 +97,49 @@ local function OnStopChanneling(inst)
 	inst.channeler = nil
 end
 
+--this function is the main function for the dl_recorder.
+--it captures all prefabs, and handles all the file writing and json magic.
 local function Capture(inst, channeler)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local itemsinside = inst.components.container:GetAllItems()
-	local ents = TheSim:FindEntities(x, y, z, inst.range, nil, NO_CAPTURE_TAGS)
-	local saved_ents = {}
+	local x, y, z = inst.Transform:GetWorldPosition() 
+	local ents = CheckAndGetValidEntities(inst) 
+	local saved_ents = {} 
 	local num = tostring(math.random(1000))
-	local text = (inst.components.writeable.text == nil and "returnedTable" .. num) or
-		string.gsub(inst.components.writeable.text, " ", "_")
-	local file = io.open(file_name, "r+")
+	local text = (inst.components.writeable.text == nil and "returnedTable" .. num) or string.gsub(inst.components.writeable.text, " ", "_")
+	local file = io.open(output_file, "r+")
 
-	for i, v in ipairs(itemsinside) do
-		if v.prefab == "log" then
-			inst.range = inst.range + v.components.stackable:StackSize()
-		end -- since each log is 1, 4 logs = 1 tile!
-		if v.prefab == "boards" then
-			inst.range = inst.range + (v.components.stackable:StackSize() * TILE_SCALE)
-		end
-		v:AddTag("NOCAPTURE")
-	end
 
 	for k, v in ipairs(ents) do
 		if v ~= inst then
 			local vx, vy, vz = v.Transform:GetWorldPosition()
-			local px, py, pz = vx - x, vy - y, vz - z
+			local px, py, pz = vx - x, vy - y, vz - z --this gets the relative coodinates from the recorder.
 
 			if saved_ents[text] == nil then
 				saved_ents[text] = {}
 			end
 
-			saved_ents[text].has_tiles = false
-			saved_ents[text].spawn_in_water = false
-			saved_ents[text].only_spawn_in_water = false
-			saved_ents[text].smooth_rorate = false
-			saved_ents[text].no_rotation = false
+			-- some parameters for customization
+			saved_ents[text].has_tiles = false  --automatically set, you may overwrite. Limits rotation to multiples of 90
+			saved_ents[text].spawn_in_water = false --controls whether the setpiece can spawn prefabs/tiles on water.
+			saved_ents[text].only_spawn_in_water = false --controls wheter the setpiece can ONLY spawn in water.
+			saved_ents[text].smooth_rorate = false --if false,  rotateable and with no tiles, setpieces rotate on multiples of 45. if true, rotation is between 0-360
+			saved_ents[text].no_rotation = false --if true, disables rotation entirely.
 
 			local thedata = { relative_x = px, relative_y = py, relative_z = pz, v:GetSaveRecord() }
-			if v.prefab == "dl_tileflag" then
-				thedata.tile = TheWorld.Map:GetTileAtPoint(vx, vy, vz)
-				saved_ents[text].has_tiles = true
-				saved_ents[text].spawn_in_water = true
+			--this is the data stored for the entity. GetSaveRecord gets all sort of data related to the entity, from deciduoustrees's colour to heatrock heat.
+			
+			if v.prefab == "dl_tileflag" then --if the prefab is a tileflag, some extra data gets added
+				thedata.tile = TheWorld.Map:GetTileAtPoint(vx, vy, vz) --such as the tile
+				saved_ents[text].has_tiles = true --setting the "has_tiles" parameter to true, so it can only spawn in right angles.
+				saved_ents[text].spawn_in_water = true --and setting this to true as well.
 			end
 
-			table.insert(saved_ents[text], thedata)
+			table.insert(saved_ents[text], thedata)--insert the prefab data into the main data table.
 		end
 	end
 
+	--I would explain this to you if I remembered what it did.
 	if file then
-		local file_str = file:read("*a")
+		local file_str = file:read("*a") 
 		local data
 		local file_data = {}
 
@@ -153,12 +154,12 @@ local function Capture(inst, channeler)
 
 		local str = json.encode(file_data)
 
-		file = io.open(file_name, "w")
+		file = io.open(output_file, "w")
 		--while, yes, the IDE is telling me I need to add a nil check here, there really isn't a way for the file we *just* opened to be nil, consdering we checked for that previously.
 		data = file:write(str)
 		file:close()
 		TheNet:Announce("Successfully captured!")
-		CheckValidEntities(inst, true) --reset range
+		CheckAndGetValidEntities(inst, true) --reset range
 		inst:Remove()
 
 		return data
@@ -224,8 +225,8 @@ local function fn()
 		inst.Transform:SetPosition(tile_x, tile_y, tile_z)
 	end)
 
-	inst:ListenForEvent("itemlose", CheckValidEntities)
-	inst:ListenForEvent("itemget", CheckValidEntities)
+	inst:ListenForEvent("itemlose", CheckAndGetValidEntities)
+	inst:ListenForEvent("itemget", CheckAndGetValidEntities)
 	inst:ListenForEvent("onremoved", function()
 		for k, v in pairs(Ents) do
 			if v.AnimState ~= nil and v:IsValid() and v:HasTag("DL_VALID") then
@@ -287,7 +288,7 @@ local function SpawnDynamicLayout(inst)
 		return
 	end
 
-	local file = io.open(file_name, "r+")
+	local file = io.open(output_file, "r+")
 	local x, y, z = inst.Transform:GetWorldPosition()
 
 	if file then
