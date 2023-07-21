@@ -360,7 +360,11 @@ local function SpawnDynamicLayout(inst, angle_override)
 				if v.tile ~= nil then
 					local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(px, v.relative_y + y, pz)
 					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water then
-						TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
+						if v.tile == WORLD_TILES.MONKEY_DOCK then
+								TheWorld.components.dockmanager:CreateDockAtPoint(tile_x, tile_z, v.tile)
+						else
+							TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
+						end
 					end
 				else
 					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water or only_spawn_in_water and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
