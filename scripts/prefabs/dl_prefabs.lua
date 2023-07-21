@@ -311,19 +311,19 @@ local function SpawnLayout(inst, angle_override)
 		end
 
 		local has_tiles = data[inst.components.writeable.text]
-		.has_tiles                                                                                 --Automatically set. defines whether the setpiece will rotate in 45° angles or 90, if it has tiles, it's gonna rotate in 90 to prevent tiles being wierd.
+			.has_tiles       --Automatically set. defines whether the setpiece will rotate in 45° angles or 90, if it has tiles, it's gonna rotate in 90 to prevent tiles being wierd.
 		local spawn_in_water = data[inst.components.writeable.text]
-		.spawn_in_water                                                                            --defines whether a setpiece should spawn tiles and prefabs on water. Defaults to false, but is automatically set to true if there's tiles.
+			.spawn_in_water  --defines whether a setpiece should spawn tiles and prefabs on water. Defaults to false, but is automatically set to true if there's tiles.
 		local only_spawn_in_water = data[inst.components.writeable.text]
-		.only_spawn_in_water                                                                       --defines whether a setpiece should spawn tiles and prefabs ONLY on water. Defaults to false.
+			.only_spawn_in_water --defines whether a setpiece should spawn tiles and prefabs ONLY on water. Defaults to false.
 		local smooth_rorate = data[inst.components.writeable.text]
-		.smooth_rotate                                                                             --defines whether the setpiece should rotate in a completely random angle. Defaults to false.
+			.smooth_rotate   --defines whether the setpiece should rotate in a completely random angle. Defaults to false.
 		local no_rotation = data[inst.components.writeable.text]
-		.no_rotation                                                                               --defines whether the setpiece should rotate at all, defaults to false
+			.no_rotation     --defines whether the setpiece should rotate at all, defaults to false
 		local use_angle_away_from_spawn = data[inst.components.writeable.text]
-		.use_angle_away_from_spawn                                                                 --defines whether spawners spawned by this setpiece should rotate their setpiece away from this setpiece's spoawner.
+			.use_angle_away_from_spawn --defines whether spawners spawned by this setpiece should rotate their setpiece away from this setpiece's spoawner.
 		local prevent_overlap = data[inst.components.writeable.text]
-		.prevent_overlap                                                                           --prevents the setpiece from spawning where a previous setpiece spawned.
+			.prevent_overlap --prevents the setpiece from spawning where a previous setpiece spawned.
 		local angles, angle
 
 		if has_tiles then
@@ -361,7 +361,8 @@ local function SpawnLayout(inst, angle_override)
 					local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(px, v.relative_y + y, pz)
 					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water then
 						if v.tile == WORLD_TILES.MONKEY_DOCK then
-							TheWorld.components.dockmanager:CreateDockAtPoint(tile_x, tile_z, v.tile)
+							TheWorld.components.dockmanager:CreateDockAtPoint(px, v.relative_y + y, pz,
+								WORLD_TILES.MONKEY_DOCK)
 						else
 							TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
 						end
@@ -375,14 +376,16 @@ local function SpawnLayout(inst, angle_override)
 						if prefab.prefab == "dl_spawner" then
 							prefab.layout = v.options
 
-							prefab:DoTaskInTime(0, function(_inst)
+							prefab:DoTaskInTime(1, function(_inst)
 								local _x, _y, _z = _inst.Transform:GetWorldPosition()
-								if  prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) < 1  then
+								if prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) < 1 then
 									print("didn't find any blockers!")
-									SpawnLayout(_inst, (use_angle_away_from_spawn and math.atan2(x - px, pz - z) + math.rad(180)) or nil)
-								elseif not prevent_overlap  then
+									SpawnLayout(_inst,
+										(use_angle_away_from_spawn and math.atan2(x - px, pz - z) + math.rad(180)) or nil)
+								elseif not prevent_overlap then
 									print("allows overlap")
-									SpawnLayout(_inst, (use_angle_away_from_spawn and math.atan2(x - px, pz - z) + math.rad(180)) or nil)
+									SpawnLayout(_inst,
+										(use_angle_away_from_spawn and math.atan2(x - px, pz - z) + math.rad(180)) or nil)
 								else
 									print("found a blocker! removing!")
 									_inst:Remove()
@@ -473,4 +476,4 @@ local function Blocker(inst)
 end
 
 return Prefab("dl_recorder", fn), Prefab("dl_tileflag", TileFlag), Prefab("dl_spawner", spawnerfn),
-	Prefab("dl_blocker", Blocker)                                                                                                 -- Version 5.0
+	Prefab("dl_blocker", Blocker) -- Version 5.0

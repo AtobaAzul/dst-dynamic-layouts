@@ -6,7 +6,8 @@
                 "prefab": "dl_tileflag",
                 "z": -186
             },
-            "tile": 2,
+            "tile": 4,
+
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": 0
@@ -17,7 +18,8 @@
                 "prefab": "dl_tileflag",
                 "z": -194
             },
-            "tile": 2,
+            "tile": 4,
+
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": -8
@@ -28,7 +30,8 @@
                 "prefab": "dl_tileflag",
                 "z": -190
             },
-            "tile": 2,
+            "tile": 4,
+
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": -4
@@ -66,7 +69,8 @@
                 "prefab": "dl_tileflag",
                 "z": 214
             },
-            "tile": 262,
+            "tile": 4,
+
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": 0
@@ -87,7 +91,8 @@
                 "prefab": "dl_tileflag",
                 "z": 218
             },
-            "tile": 262,
+            "tile": 4,
+
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": 4
@@ -98,7 +103,8 @@
                 "prefab": "dl_tileflag",
                 "z": 214
             },
-            "tile": 262,
+            "tile": 4,
+
             "relative_x": 4,
             "relative_y": 0,
             "relative_z": 0
@@ -109,7 +115,8 @@
                 "prefab": "dl_tileflag",
                 "z": 214
             },
-            "tile": 262,
+            "tile": 4,
+
             "relative_x": -4,
             "relative_y": 0,
             "relative_z": 0
@@ -120,7 +127,8 @@
                 "prefab": "dl_tileflag",
                 "z": 210
             },
-            "tile": 262,
+            "tile": 4,
+
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": -4
@@ -131,7 +139,8 @@
                 "prefab": "dl_tileflag",
                 "z": 218
             },
-            "tile": 262,
+            "tile": 4,
+
             "relative_x": -4,
             "relative_y": 0,
             "relative_z": 4
@@ -142,7 +151,8 @@
                 "prefab": "dl_tileflag",
                 "z": 218
             },
-            "tile": 262,
+            "tile": 4,
+
             "relative_x": 4,
             "relative_y": 0,
             "relative_z": 4
@@ -153,7 +163,8 @@
                 "prefab": "dl_tileflag",
                 "z": 210
             },
-            "tile": 262,
+            "tile": 4,
+
             "relative_x": -4,
             "relative_y": 0,
             "relative_z": -4
@@ -164,7 +175,8 @@
                 "prefab": "dl_tileflag",
                 "z": 210
             },
-            "tile": 262,
+            "tile": 4,
+
             "relative_x": 4,
             "relative_y": 0,
             "relative_z": -4
@@ -177,7 +189,7 @@
             },
             "options": {
                 "Connection": 1,
-                "End": 2
+                "End": 1
             },
             "relative_x": -8,
             "relative_y": 0,
@@ -191,7 +203,7 @@
             },
             "options": {
                 "Connection": 1,
-                "End": 2
+                "End": 1
             },
             "relative_x": 8,
             "relative_y": 0,
@@ -205,7 +217,7 @@
             },
             "options": {
                 "Connection": 1,
-                "End": 2
+                "End": 1
             },
             "relative_x": 0,
             "relative_y": 0,
@@ -241,7 +253,7 @@
                 "prefab": "dl_tileflag",
                 "z": -170
             },
-            "tile": 10,
+            "tile": 4,
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": 0
@@ -252,7 +264,7 @@
                 "prefab": "dl_tileflag",
                 "z": -170
             },
-            "tile": 10,
+            "tile": 4,
             "relative_x": 4,
             "relative_y": 0,
             "relative_z": 0
@@ -263,7 +275,7 @@
                 "prefab": "dl_tileflag",
                 "z": -174
             },
-            "tile": 10,
+            "tile": 4,
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": -4
@@ -274,7 +286,7 @@
                 "prefab": "dl_tileflag",
                 "z": -170
             },
-            "tile": 10,
+            "tile": 4,
             "relative_x": -4,
             "relative_y": 0,
             "relative_z": 0
@@ -286,7 +298,7 @@
                 "prefab": "dl_tileflag",
                 "z": -166
             },
-            "tile": 10,
+            "tile": 4,
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": 4
@@ -297,7 +309,7 @@
                 "prefab": "dl_tileflag",
                 "z": -166
             },
-            "tile": 10,
+            "tile": 4,
             "relative_x": -4,
             "relative_y": 0,
             "relative_z": 4
@@ -308,7 +320,7 @@
                 "prefab": "dl_tileflag",
                 "z": -174
             },
-            "tile": 10,
+            "tile": 4,
             "relative_x": -4,
             "relative_y": 0,
             "relative_z": -4
@@ -319,7 +331,7 @@
                 "prefab": "dl_tileflag",
                 "z": -174
             },
-            "tile": 10,
+            "tile": 4,
             "relative_x": 4,
             "relative_y": 0,
             "relative_z": -4
@@ -330,7 +342,7 @@
                 "prefab": "dl_tileflag",
                 "z": -166
             },
-            "tile": 10,
+            "tile": 4,
             "relative_x": 4,
             "relative_y": 0,
             "relative_z": 4
