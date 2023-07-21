@@ -110,7 +110,7 @@ local function Capture(inst, channeler)
 	local file = io.open(output_file, "r+")
 
 	if saved_ents[text] == nil then
-		saved_ents[text] = {}
+		saved_ents[text] = {}--define the value of that key as a table.
 	end
 
 	-- some parameters for customization
@@ -119,11 +119,11 @@ local function Capture(inst, channeler)
 	saved_ents[text].only_spawn_in_water = false --controls wheter the setpiece can ONLY spawn in water.
 	saved_ents[text].smooth_rorate = false    --if false,  rotateable and with no tiles, setpieces rotate on multiples of 45. if true, rotation is between 0-360
 	saved_ents[text].no_rotation = false      --if true, disables rotation entirely.
-	saved_ents[text].use_angle_away_from_spawn = false
+	saved_ents[text].use_angle_away_from_spawn = false 
 
 	for k, v in ipairs(ents) do
 		if v ~= inst then
-			local vx, vy, vz = v.Transform:GetWorldPosition()
+			local vx, vy, vz = v.Transform:GetWorldPosition() 
 			local px, py, pz = vx - x, vy - y, vz - z --this gets the relative coodinates from the recorder.
 
 
@@ -163,7 +163,7 @@ local function Capture(inst, channeler)
 		data = file:write(str)
 		file:close()
 		TheNet:Announce("Successfully captured!")
-		CheckAndGetValidEntities(inst, true) --reset range
+		CheckAndGetValidEntities(inst, true) --reset range indication
 		inst:Remove()
 
 		return data
@@ -282,22 +282,17 @@ local function TileFlag(inst)
 end
 
 local function SpawnDynamicLayout(inst, angle_override)
-	if type(angle_override) == "number" then
-		print("angle_override", angle_override)
-		print(math.deg(angle_override))
-	end
-	if inst.layout ~= nil then
-		local layout = weighted_random_choice(inst.layout)
-		print("layout", inst.layout)
+	if inst.layout ~= nil then--the inst.layout table is a table that has different variants, or options avaible.
+		local layout = weighted_random_choice(inst.layout) --if it is avaible, then it picks one.
 		if layout ~= "End" then
-			inst.components.writeable.text = layout
+			inst.components.writeable.text = layout --and sets it as the text, which is used for the spawning.
 		else
 			inst:Remove()
 			return
 		end
 	end
 
-	if inst.components.writeable.text == "" or inst.components.writeable.text == nil then
+	if inst.components.writeable.text == "" or inst.components.writeable.text == nil then --if there's nothing written, or somehow nil, return early to prevent code below from running and likely crahsing
 		return
 	end
 
@@ -315,13 +310,15 @@ local function SpawnDynamicLayout(inst, angle_override)
 			return
 		end
 
-		local has_tiles = data[inst.components.writeable.text].has_tiles
-		local spawn_in_water = data[inst.components.writeable.text].spawn_in_water
-		local only_spawn_in_water = data[inst.components.writeable.text].only_spawn_in_water
-		local smooth_rorate = data[inst.components.writeable.text].smooth_rotate
-		local no_rotation = data[inst.components.writeable.text].no_rotation
+		local has_tiles = data[inst.components.writeable.text].has_tiles --Automatically set. defines whether the setpiece will rotate in 45° angles or 90, if it has tiles, it's gonna rotate in 90 to prevent tiles being wierd.
+		local spawn_in_water = data[inst.components.writeable.text].spawn_in_water --defines whether a setpiece should spawn tiles and prefabs on water. Defaults to false, but is automatically set to true if there's tiles.
+		local only_spawn_in_water = data[inst.components.writeable.text].only_spawn_in_water --defines whether a setpiece should spawn tiles and prefabs ONLY on water. Defaults to false.
+		local smooth_rorate = data[inst.components.writeable.text].smooth_rotate --defines whether the setpiece should rotate in a completely random angle. Defaults to false.
+		local no_rotation = data[inst.components.writeable.text].no_rotation --defines whether the setpiece should rotate at all, defaults to false
+		local use_angle_away_from_spawn = data[inst.components.writeable.text].use_angle_away_from_spawn --defines whether spawners spawned by this setpiece should rotate their setpiece away from this setpiece's spoawner.
+
 		local angles, angle
-		local use_angle_away_from_spawn = data[inst.components.writeable.text].use_angle_away_from_spawn
+
 		if has_tiles then
 			angles = { 0, 90, 180, 270, 360 }
 		else
@@ -336,13 +333,9 @@ local function SpawnDynamicLayout(inst, angle_override)
 			angle = math.rad(angles[math.random(#angles)])
 		end
 
-		if inst.angle_away ~= nil then
-			angle = inst.angle_away
-		end
 
 		angle = type(angle_override) == "number" and angle_override or angle
 
-		print(angle, inst.angle_away)
 		for k, v in pairs(data[inst.components.writeable.text]) do
 			if type(v) == "table" and v.relative_x ~= nil then
 				local px = math.cos(angle) * (v.relative_x) - math.sin(angle) * (v.relative_z) +
@@ -370,19 +363,13 @@ local function SpawnDynamicLayout(inst, angle_override)
 					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water or only_spawn_in_water and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
 						local prefab = SpawnSaveRecord(v["1"])
 
-						if prefab.prefab == "dl_spawner" and use_angle_away_from_spawn then
-							print("math.rad", math.rad(prefab:GetAngleToPoint(x, 0, z) + 180))
-							print("prefab.angleaway", prefab.angle_away)
-						end
-
 						prefab.Transform:SetPosition(px, v.relative_y + y, pz)
 						prefab:AddTag("noreplaceremove")
-						if prefab.prefab == "dl_spawner" then
-							print("options", v.options)
+						if prefab.prefab == "dl_spawner"  then
 							prefab.layout = v.options
 
-							prefab:DoTaskInTime(2.5, function(_inst)
-								SpawnDynamicLayout(_inst, math.atan2(x - px, pz - z) + math.rad(180))
+							prefab:DoTaskInTime(0, function(_inst)
+								SpawnDynamicLayout(_inst, use_angle_away_from_spawn and math.atan2(x - px, pz - z) + math.rad(180) or nil)
 							end)
 						end
 					end
