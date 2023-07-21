@@ -1,1 +1,404 @@
-{"Connection":{"1":{"1":{"x":-362,"prefab":"dl_tileflag","z":-186},"tile":2,"relative_x":0,"relative_y":0,"relative_z":0},"3":{"1":{"x":-362,"prefab":"dl_tileflag","z":-194},"tile":2,"relative_x":0,"relative_y":0,"relative_z":-8},"2":{"1":{"x":-362,"prefab":"dl_tileflag","z":-190},"tile":2,"relative_x":0,"relative_y":0,"relative_z":-4},"no_rotation":false,"4":{"1":{"prefab":"dl_spawner","x":-362,"data":{"writeable":{"netid":"76561198830730990","text":"Room","userid":"KU_L8KAOObC"}},"z":-202},"relative_x":0,"relative_y":0,"relative_z":-16},"only_spawn_in_water":false,"smooth_rorate":false,"use_angle_away_from_spawn":false,"spawn_in_water":true,"has_tiles":true},"Room":{"1":{"1":{"data":{"health":{"health":200}},"x":9.5,"prefab":"wall_stone","z":77.5},"relative_x":-6.5,"relative_y":0,"relative_z":-2.5},"2":{"1":{"data":{"health":{"health":200}},"x":13.5,"prefab":"wall_stone","z":86.5},"relative_x":-2.5,"relative_y":0,"relative_z":6.5},"3":{"1":{"data":{"health":{"health":200}},"x":18.5,"prefab":"wall_stone","z":73.5},"relative_x":2.5,"relative_y":0,"relative_z":-6.5},"4":{"1":{"data":{"health":{"health":200}},"x":9.5,"prefab":"wall_stone","z":82.5},"relative_x":-6.5,"relative_y":0,"relative_z":2.5},"5":{"1":{"data":{"health":{"health":200}},"x":22.5,"prefab":"wall_stone","z":77.5},"relative_x":6.5,"relative_y":0,"relative_z":-2.5},"6":{"1":{"data":{"health":{"health":200}},"x":18.5,"prefab":"wall_stone","z":86.5},"relative_x":2.5,"relative_y":0,"relative_z":6.5},"7":{"1":{"data":{"health":{"health":200}},"x":22.5,"prefab":"wall_stone","z":82.5},"relative_x":6.5,"relative_y":0,"relative_z":2.5},"8":{"1":{"data":{"health":{"health":200}},"x":13.5,"prefab":"wall_stone","z":73.5},"relative_x":-2.5,"relative_y":0,"relative_z":-6.5},"9":{"1":{"data":{"health":{"health":200}},"x":9.5,"prefab":"wall_stone","z":76.5},"relative_x":-6.5,"relative_y":0,"relative_z":-3.5},"10":{"1":{"data":{"health":{"health":200}},"x":22.5,"prefab":"wall_stone","z":83.5},"relative_x":6.5,"relative_y":0,"relative_z":3.5},"11":{"1":{"data":{"health":{"health":200}},"x":19.5,"prefab":"wall_stone","z":86.5},"relative_x":3.5,"relative_y":0,"relative_z":6.5},"12":{"1":{"data":{"health":{"health":200}},"x":9.5,"prefab":"wall_stone","z":83.5},"relative_x":-6.5,"relative_y":0,"relative_z":3.5},"13":{"1":{"data":{"health":{"health":200}},"x":19.5,"prefab":"wall_stone","z":73.5},"relative_x":3.5,"relative_y":0,"relative_z":-6.5},"14":{"1":{"data":{"health":{"health":200}},"x":22.5,"prefab":"wall_stone","z":76.5},"relative_x":6.5,"relative_y":0,"relative_z":-3.5},"15":{"1":{"data":{"health":{"health":200}},"x":12.5,"prefab":"wall_stone","z":73.5},"relative_x":-3.5,"relative_y":0,"relative_z":-6.5},"16":{"1":{"data":{"health":{"health":200}},"x":12.5,"prefab":"wall_stone","z":86.5},"relative_x":-3.5,"relative_y":0,"relative_z":6.5},"17":{"1":{"data":{"health":{"health":200}},"x":9.5,"prefab":"wall_stone","z":75.5},"relative_x":-6.5,"relative_y":0,"relative_z":-4.5},"18":{"1":{"data":{"health":{"health":200}},"x":11.5,"prefab":"wall_stone","z":73.5},"relative_x":-4.5,"relative_y":0,"relative_z":-6.5},"19":{"1":{"data":{"health":{"health":200}},"x":11.5,"prefab":"wall_stone","z":86.5},"relative_x":-4.5,"relative_y":0,"relative_z":6.5},"20":{"1":{"data":{"health":{"health":200}},"x":22.5,"prefab":"wall_stone","z":75.5},"relative_x":6.5,"relative_y":0,"relative_z":-4.5},"21":{"1":{"data":{"health":{"health":200}},"x":20.5,"prefab":"wall_stone","z":73.5},"relative_x":4.5,"relative_y":0,"relative_z":-6.5},"22":{"1":{"data":{"health":{"health":200}},"x":9.5,"prefab":"wall_stone","z":84.5},"relative_x":-6.5,"relative_y":0,"relative_z":4.5},"23":{"1":{"data":{"health":{"health":200}},"x":22.5,"prefab":"wall_stone","z":84.5},"relative_x":6.5,"relative_y":0,"relative_z":4.5},"24":{"1":{"data":{"health":{"health":200}},"x":20.5,"prefab":"wall_stone","z":86.5},"relative_x":4.5,"relative_y":0,"relative_z":6.5},"25":{"1":{"x":8,"prefab":"dl_spawner","z":80},"options":{"Connection":1,"End":3},"relative_x":-8,"relative_y":0,"relative_z":0},"26":{"1":{"x":16,"prefab":"dl_spawner","z":72},"options":{"Connection":1,"End":3},"relative_x":0,"relative_y":0,"relative_z":-8},"27":{"1":{"x":16,"prefab":"dl_spawner","z":88},"options":{"Connection":1,"End":3},"relative_x":0,"relative_y":0,"relative_z":8},"28":{"1":{"data":{"health":{"health":200}},"x":9.5,"prefab":"wall_stone","z":74.5},"relative_x":-6.5,"relative_y":0,"relative_z":-5.5},"29":{"1":{"data":{"health":{"health":200}},"x":10.5,"prefab":"wall_stone","z":73.5},"relative_x":-5.5,"relative_y":0,"relative_z":-6.5},"30":{"1":{"data":{"health":{"health":200}},"x":10.5,"prefab":"wall_stone","z":86.5},"relative_x":-5.5,"relative_y":0,"relative_z":6.5},"31":{"1":{"data":{"health":{"health":200}},"x":22.5,"prefab":"wall_stone","z":74.5},"relative_x":6.5,"relative_y":0,"relative_z":-5.5},"32":{"1":{"data":{"health":{"health":200}},"x":21.5,"prefab":"wall_stone","z":73.5},"relative_x":5.5,"relative_y":0,"relative_z":-6.5},"33":{"1":{"data":{"health":{"health":200}},"x":22.5,"prefab":"wall_stone","z":85.5},"relative_x":6.5,"relative_y":0,"relative_z":5.5},"34":{"1":{"data":{"health":{"health":200}},"x":21.5,"prefab":"wall_stone","z":86.5},"relative_x":5.5,"relative_y":0,"relative_z":6.5},"35":{"1":{"data":{"health":{"health":200}},"x":9.5,"prefab":"wall_stone","z":85.5},"relative_x":-6.5,"relative_y":0,"relative_z":5.5},"36":{"1":{"data":{"health":{"health":200}},"x":9.5,"prefab":"wall_stone","z":73.5},"relative_x":-6.5,"relative_y":0,"relative_z":-6.5},"37":{"1":{"data":{"health":{"health":200}},"x":22.5,"prefab":"wall_stone","z":86.5},"relative_x":6.5,"relative_y":0,"relative_z":6.5},"38":{"1":{"data":{"health":{"health":200}},"x":22.5,"prefab":"wall_stone","z":73.5},"relative_x":6.5,"relative_y":0,"relative_z":-6.5},"39":{"1":{"data":{"health":{"health":200}},"x":9.5,"prefab":"wall_stone","z":86.5},"relative_x":-6.5,"relative_y":0,"relative_z":6.5},"smooth_rorate":false,"use_angle_away_from_spawn":false,"no_rotation":false,"has_tiles":false,"only_spawn_in_water":false,"spawn_in_water":false},"Center":{"has_tiles":true,"spawn_in_water":true,"smooth_rorate":false,"1":{"1":{"x":-322,"prefab":"dl_tileflag","z":-170},"tile":10,"relative_x":0,"relative_y":0,"relative_z":0},"only_spawn_in_water":false,"3":{"1":{"x":-322,"prefab":"dl_tileflag","z":-174},"tile":10,"relative_x":0,"relative_y":0,"relative_z":-4},"2":{"1":{"x":-326,"prefab":"dl_tileflag","z":-170},"tile":10,"relative_x":-4,"relative_y":0,"relative_z":0},"no_rotation":false,"4":{"1":{"x":-322,"prefab":"dl_tileflag","z":-166},"tile":10,"relative_x":0,"relative_y":0,"relative_z":4},"7":{"1":{"x":-326,"prefab":"dl_tileflag","z":-166},"tile":10,"relative_x":-4,"relative_y":0,"relative_z":4},"6":{"1":{"x":-326,"prefab":"dl_tileflag","z":-174},"tile":10,"relative_x":-4,"relative_y":0,"relative_z":-4},"9":{"1":{"x":-318,"prefab":"dl_tileflag","z":-174},"tile":10,"relative_x":4,"relative_y":0,"relative_z":-4},"8":{"1":{"x":-318,"prefab":"dl_tileflag","z":-166},"tile":10,"relative_x":4,"relative_y":0,"relative_z":4},"use_angle_away_from_spawn":true,"5":{"1":{"x":-318,"prefab":"dl_tileflag","z":-170},"tile":10,"relative_x":4,"relative_y":0,"relative_z":0},"13":{"1":{"data":{"writeable":{"netid":"76561198830730990","text":"Connection","userid":"KU_L8KAOObC"}},"x":-314,"prefab":"dl_spawner","z":-170},"relative_x":8,"relative_y":0,"relative_z":0},"12":{"1":{"data":{"writeable":{"netid":"76561198830730990","text":"Connection","userid":"KU_L8KAOObC"}},"x":-322,"prefab":"dl_spawner","z":-162},"relative_x":0,"relative_y":0,"relative_z":8},"11":{"1":{"data":{"writeable":{"netid":"76561198830730990","text":"Connection","userid":"KU_L8KAOObC"}},"x":-330,"prefab":"dl_spawner","z":-170},"relative_x":-8,"relative_y":0,"relative_z":0},"10":{"1":{"data":{"writeable":{"netid":"76561198830730990","text":"Connection","userid":"KU_L8KAOObC"}},"x":-322,"prefab":"dl_spawner","z":-178},"relative_x":0,"relative_y":0,"relative_z":-8}}}
+{
+    "Connection": {
+        "1": {
+            "1": {
+                "x": -362,
+                "prefab": "dl_tileflag",
+                "z": -186
+            },
+            "tile": 2,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "3": {
+            "1": {
+                "x": -362,
+                "prefab": "dl_tileflag",
+                "z": -194
+            },
+            "tile": 2,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        "2": {
+            "1": {
+                "x": -362,
+                "prefab": "dl_tileflag",
+                "z": -190
+            },
+            "tile": 2,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "no_rotation": false,
+        "4": {
+            "1": {
+                "data": {
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Room",
+                        "userid": "KU_L8KAOObC"
+                    }
+                },
+                "x": -362,
+                "prefab": "dl_spawner",
+                "z": -202
+            },
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -16
+        },
+        "only_spawn_in_water": false,
+        "smooth_rorate": false,
+        "use_angle_away_from_spawn": true,
+        "spawn_in_water": true,
+        "has_tiles": true
+    },
+    "Room": {
+        "1": {
+            "1": {
+                "x": -410,
+                "prefab": "dl_tileflag",
+                "z": 214
+            },
+            "tile": 262,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "2": {
+            "1": {
+                "x": -410,
+                "prefab": "dl_tileflag",
+                "z": 218
+            },
+            "tile": 262,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "3": {
+            "1": {
+                "x": -406,
+                "prefab": "dl_tileflag",
+                "z": 214
+            },
+            "tile": 262,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "4": {
+            "1": {
+                "x": -414,
+                "prefab": "dl_tileflag",
+                "z": 214
+            },
+            "tile": 262,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "5": {
+            "1": {
+                "x": -410,
+                "prefab": "dl_tileflag",
+                "z": 210
+            },
+            "tile": 262,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "6": {
+            "1": {
+                "x": -414,
+                "prefab": "dl_tileflag",
+                "z": 218
+            },
+            "tile": 262,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "7": {
+            "1": {
+                "x": -406,
+                "prefab": "dl_tileflag",
+                "z": 218
+            },
+            "tile": 262,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "8": {
+            "1": {
+                "x": -414,
+                "prefab": "dl_tileflag",
+                "z": 210
+            },
+            "tile": 262,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "9": {
+            "1": {
+                "x": -406,
+                "prefab": "dl_tileflag",
+                "z": 210
+            },
+            "tile": 262,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "10": {
+            "1": {
+                "x": -418,
+                "prefab": "dl_spawner",
+                "z": 214
+            },
+            "options": {
+                "Connection": 1,
+                "End": 3
+            },
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "11": {
+            "1": {
+                "x": -402,
+                "prefab": "dl_spawner",
+                "z": 214
+            },
+            "options": {
+                "Connection": 1,
+                "End": 3
+            },
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "12": {
+            "1": {
+                "x": -410,
+                "prefab": "dl_spawner",
+                "z": 222
+            },
+            "options": {
+                "Connection": 1,
+                "End": 3
+            },
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "smooth_rorate": false,
+        "use_angle_away_from_spawn": true,
+        "has_tiles": true,
+        "no_rotation": false,
+        "only_spawn_in_water": false,
+        "spawn_in_water": true
+    },
+    "Center": {
+        "40": {
+            "1": {
+                "x": -318,
+                "prefab": "dl_blocker",
+                "z": -170
+            },
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "spawn_in_water": true,
+        "has_tiles": true,
+        "smooth_rorate": false,
+        "only_spawn_in_water": false,
+        "1": {
+            "1": {
+                "x": -322,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 10,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "5": {
+            "1": {
+                "x": -318,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 10,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "3": {
+            "1": {
+                "x": -322,
+                "prefab": "dl_tileflag",
+                "z": -174
+            },
+            "tile": 10,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "2": {
+            "1": {
+                "x": -326,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 10,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "no_rotation": false,
+        "4": {
+            "1": {
+                "x": -322,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 10,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "7": {
+            "1": {
+                "x": -326,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 10,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "6": {
+            "1": {
+                "x": -326,
+                "prefab": "dl_tileflag",
+                "z": -174
+            },
+            "tile": 10,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "9": {
+            "1": {
+                "x": -318,
+                "prefab": "dl_tileflag",
+                "z": -174
+            },
+            "tile": 10,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "8": {
+            "1": {
+                "x": -318,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 10,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "use_angle_away_from_spawn": true,
+        "14": {
+            "1": {
+                "x": -318,
+                "prefab": "dl_blocker",
+                "z": -170
+            },
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "13": {
+            "1": {
+                "prefab": "dl_spawner",
+                "x": -314,
+                "data": {
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Connection",
+                        "userid": "KU_L8KAOObC"
+                    }
+                },
+                "z": -170
+            },
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "12": {
+            "1": {
+                "prefab": "dl_spawner",
+                "x": -322,
+                "data": {
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Connection",
+                        "userid": "KU_L8KAOObC"
+                    }
+                },
+                "z": -162
+            },
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "11": {
+            "1": {
+                "prefab": "dl_spawner",
+                "x": -330,
+                "data": {
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Connection",
+                        "userid": "KU_L8KAOObC"
+                    }
+                },
+                "z": -170
+            },
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "10": {
+            "1": {
+                "prefab": "dl_spawner",
+                "x": -322,
+                "data": {
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Connection",
+                        "userid": "KU_L8KAOObC"
+                    }
+                },
+                "z": -178
+            },
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -8
+        }
+    }
+}

@@ -110,7 +110,7 @@ local function Capture(inst, channeler)
 	local file = io.open(output_file, "r+")
 
 	if saved_ents[text] == nil then
-		saved_ents[text] = {}--define the value of that key as a table.
+		saved_ents[text] = {} --define the value of that key as a table.
 	end
 
 	-- some parameters for customization
@@ -119,11 +119,12 @@ local function Capture(inst, channeler)
 	saved_ents[text].only_spawn_in_water = false --controls wheter the setpiece can ONLY spawn in water.
 	saved_ents[text].smooth_rorate = false    --if false,  rotateable and with no tiles, setpieces rotate on multiples of 45. if true, rotation is between 0-360
 	saved_ents[text].no_rotation = false      --if true, disables rotation entirely.
-	saved_ents[text].use_angle_away_from_spawn = false 
+	saved_ents[text].use_angle_away_from_spawn = false
+	saved_ents[text].prevent_overlap = true
 
 	for k, v in ipairs(ents) do
 		if v ~= inst then
-			local vx, vy, vz = v.Transform:GetWorldPosition() 
+			local vx, vy, vz = v.Transform:GetWorldPosition()
 			local px, py, pz = vx - x, vy - y, vz - z --this gets the relative coodinates from the recorder.
 
 
@@ -281,11 +282,11 @@ local function TileFlag(inst)
 	return inst
 end
 
-local function SpawnDynamicLayout(inst, angle_override)
-	if inst.layout ~= nil then--the inst.layout table is a table that has different variants, or options avaible.
+local function SpawnLayout(inst, angle_override)
+	if inst.layout ~= nil then                       --the inst.layout table is a table that has different variants, or options avaible.
 		local layout = weighted_random_choice(inst.layout) --if it is avaible, then it picks one.
 		if layout ~= "End" then
-			inst.components.writeable.text = layout --and sets it as the text, which is used for the spawning.
+			inst.components.writeable.text = layout  --and sets it as the text, which is used for the spawning.
 		else
 			inst:Remove()
 			return
@@ -306,17 +307,23 @@ local function SpawnDynamicLayout(inst, angle_override)
 
 		if data[inst.components.writeable.text] == nil or type(data[inst.components.writeable.text]) ~= "table" then
 			TheNet:Announce("Invalid data!")
-			print(data[inst.components.writeable.text])
 			return
 		end
 
-		local has_tiles = data[inst.components.writeable.text].has_tiles --Automatically set. defines whether the setpiece will rotate in 45° angles or 90, if it has tiles, it's gonna rotate in 90 to prevent tiles being wierd.
-		local spawn_in_water = data[inst.components.writeable.text].spawn_in_water --defines whether a setpiece should spawn tiles and prefabs on water. Defaults to false, but is automatically set to true if there's tiles.
-		local only_spawn_in_water = data[inst.components.writeable.text].only_spawn_in_water --defines whether a setpiece should spawn tiles and prefabs ONLY on water. Defaults to false.
-		local smooth_rorate = data[inst.components.writeable.text].smooth_rotate --defines whether the setpiece should rotate in a completely random angle. Defaults to false.
-		local no_rotation = data[inst.components.writeable.text].no_rotation --defines whether the setpiece should rotate at all, defaults to false
-		local use_angle_away_from_spawn = data[inst.components.writeable.text].use_angle_away_from_spawn --defines whether spawners spawned by this setpiece should rotate their setpiece away from this setpiece's spoawner.
-
+		local has_tiles = data[inst.components.writeable.text]
+		.has_tiles                                                                                 --Automatically set. defines whether the setpiece will rotate in 45° angles or 90, if it has tiles, it's gonna rotate in 90 to prevent tiles being wierd.
+		local spawn_in_water = data[inst.components.writeable.text]
+		.spawn_in_water                                                                            --defines whether a setpiece should spawn tiles and prefabs on water. Defaults to false, but is automatically set to true if there's tiles.
+		local only_spawn_in_water = data[inst.components.writeable.text]
+		.only_spawn_in_water                                                                       --defines whether a setpiece should spawn tiles and prefabs ONLY on water. Defaults to false.
+		local smooth_rorate = data[inst.components.writeable.text]
+		.smooth_rotate                                                                             --defines whether the setpiece should rotate in a completely random angle. Defaults to false.
+		local no_rotation = data[inst.components.writeable.text]
+		.no_rotation                                                                               --defines whether the setpiece should rotate at all, defaults to false
+		local use_angle_away_from_spawn = data[inst.components.writeable.text]
+		.use_angle_away_from_spawn                                                                 --defines whether spawners spawned by this setpiece should rotate their setpiece away from this setpiece's spoawner.
+		local prevent_overlap = data[inst.components.writeable.text]
+		.prevent_overlap                                                                           --prevents the setpiece from spawning where a previous setpiece spawned.
 		local angles, angle
 
 		if has_tiles then
@@ -354,7 +361,7 @@ local function SpawnDynamicLayout(inst, angle_override)
 					local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(px, v.relative_y + y, pz)
 					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water then
 						if v.tile == WORLD_TILES.MONKEY_DOCK then
-								TheWorld.components.dockmanager:CreateDockAtPoint(tile_x, tile_z, v.tile)
+							TheWorld.components.dockmanager:CreateDockAtPoint(tile_x, tile_z, v.tile)
 						else
 							TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
 						end
@@ -365,11 +372,16 @@ local function SpawnDynamicLayout(inst, angle_override)
 
 						prefab.Transform:SetPosition(px, v.relative_y + y, pz)
 						prefab:AddTag("noreplaceremove")
-						if prefab.prefab == "dl_spawner"  then
+						if prefab.prefab == "dl_spawner" then
 							prefab.layout = v.options
 
 							prefab:DoTaskInTime(0, function(_inst)
-								SpawnDynamicLayout(_inst, use_angle_away_from_spawn and math.atan2(x - px, pz - z) + math.rad(180) or nil)
+								local _x, _y, _z = _inst.Transform:GetWorldPosition()
+								if  #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) <= 1 then
+									SpawnLayout(_inst, (use_angle_away_from_spawn and math.atan2(x - px, pz - z) + math.rad(180)) or nil)
+								else
+									_inst:Remove()
+								end
 							end)
 						end
 					end
@@ -402,6 +414,8 @@ local function spawnerfn()
 		return inst
 	end
 
+	inst.SpawnLayout = SpawnLayout
+
 	inst:AddComponent("inspectable")
 	inst:AddComponent("writeable")
 	inst:AddComponent("lootdropper")
@@ -415,7 +429,7 @@ local function spawnerfn()
 	inst:ListenForEvent("onbuilt", onbuilt)
 
 	inst:AddComponent("channelable")
-	inst.components.channelable:SetChannelingFn(SpawnDynamicLayout, OnStopChanneling)
+	inst.components.channelable:SetChannelingFn(SpawnLayout, OnStopChanneling)
 	inst.components.channelable.use_channel_longaction_noloop = true
 	inst.components.channelable.skip_state_channeling = true
 
@@ -427,5 +441,31 @@ local function spawnerfn()
 
 	return inst
 end
+local function Blocker(inst)
+	local inst = CreateEntity()
 
-return Prefab("dl_recorder", fn), Prefab("dl_tileflag", TileFlag), Prefab("dl_spawner", spawnerfn) -- Version 1.0
+	inst.entity:AddTransform()
+	inst.entity:AddNetwork()
+
+
+	inst:AddTag("DYNLAYOUT_BLOCKER")
+
+	-- MakeInventoryPhysics(inst)
+
+	inst.entity:SetPristine()
+
+	if not TheWorld.ismastersim then
+		return inst
+	end
+
+	inst:DoTaskInTime(0, function(inst)
+		local x, y, z = inst.Transform:GetWorldPosition()
+		local tile_x, tile_y, tile_z = TheWorld.Map:GetTileCenterPoint(x, 0, z)
+		inst.Transform:SetPosition(tile_x, 0, tile_z)
+	end)
+
+	return inst
+end
+
+return Prefab("dl_recorder", fn), Prefab("dl_tileflag", TileFlag), Prefab("dl_spawner", spawnerfn),
+	Prefab("dl_blocker", Blocker)                                                                                                 -- Version 5.0
