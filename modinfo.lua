@@ -11,10 +11,6 @@ author = "󰀈 The Uncomp Dev Team 󰀈"
 
 version = "0"
 -- VERSION SCHEME
--- first num is major release (e.g. "Under the weather", so, 2, UTW2 will be 3, and so on.) DO NOT BRING THIS NUMBER *DOWN* AGAIN PLEASE
--- second is new content (something like a new large addition)
--- third is minor (minor things like tweaks and some fixes)
--- fourth is hotfix (bug fixes, very tiny misc changes)
 
 api_version = 10
 

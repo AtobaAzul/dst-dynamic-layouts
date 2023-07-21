@@ -1,20 +1,21 @@
-require "prefabutil" 
-require "json" --required for the json sheneniganery.
+require "prefabutil"
+require "json"                 --required for the json sheneniganery.
 
-local io = require("io") --required for the file manipulation things
-local output_file = TUNING.DL.MODROOT .. "scripts/capture_output.json" --the file wheere captured prefags will be recorded to.
+local io = require("io")       --required for the file manipulation things
+local output_file = TUNING.DL.MODROOT ..
+	"scripts/capture_output.json" --the file wheere captured prefags will be recorded to.
 
-local NO_CAPTURE_TAGS = --all the tags that shouldn't be captured
+local NO_CAPTURE_TAGS =        --all the tags that shouldn't be captured
 {
-	"NOCAPTURE", --this includes the capturer itself
-	"player", --players
-	"bird", --hecking birds man
-	"NOCLICK", --stuff you can't click
-	"CLASSIFIED", --stuff you can't see
-	"FX", --FX, usually temporary stuff
-	"INLIMBO", --stuff like items inside containers. so they don't get registered twice. Among other things.
-	"smalloceancreature", --hecking fishes man.
-	"DECOR", 
+	"NOCAPTURE",               --this includes the capturer itself
+	"player",                  --players
+	"bird",                    --hecking birds man
+	"NOCLICK",                 --stuff you can't click
+	"CLASSIFIED",              --stuff you can't see
+	"FX",                      --FX, usually temporary stuff
+	"INLIMBO",                 --stuff like items inside containers. so they don't get registered twice. Among other things.
+	"smalloceancreature",      --hecking fishes man.
+	"DECOR",
 }
 
 --this function checks for valid entitites, highlights them green and returns them.
@@ -26,15 +27,15 @@ local function CheckAndGetValidEntities(inst, reset)
 	end
 
 	if reset == true then --"itemget" event pushes the second param as some table. Need to do explicit true check
-		return			  --reset param is for resetting the highlighting only.
+		return         --reset param is for resetting the highlighting only.
 	end
 
-	inst.range = 0 
+	inst.range = 0
 
-	local itemsinside = inst.components.container:GetAllItems() --get all items inside 
+	local itemsinside = inst.components.container:GetAllItems() --get all items inside
 
-	for i, v in ipairs(itemsinside) do--iterate over all of them...
-		if v.prefab == "log" then --if it's a log, increase range by 1 of each in the stack.
+	for i, v in ipairs(itemsinside) do                       --iterate over all of them...
+		if v.prefab == "log" then                            --if it's a log, increase range by 1 of each in the stack.
 			inst.range = inst.range + v.components.stackable:StackSize()
 		end
 		if v.prefab == "boards" then --if it's a log, increase it by 4.
@@ -44,12 +45,12 @@ local function CheckAndGetValidEntities(inst, reset)
 	end
 
 	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = TheSim:FindEntities(x, y, z, inst.range, nil, NO_CAPTURE_TAGS)--find all entities around
+	local ents = TheSim:FindEntities(x, y, z, inst.range, nil, NO_CAPTURE_TAGS) --find all entities around
 
 	for k, v in pairs(ents) do
-		if v.AnimState ~= nil and v ~= inst then--if they're valid
+		if v.AnimState ~= nil and v ~= inst then --if they're valid
 			v.AnimState:SetAddColour(0, 1, 0, 0) --highlight them green!
-			v:AddTag("DL_VALID") --and add this tag, for use in the first for loop above.
+			v:AddTag("DL_VALID")           --and add this tag, for use in the first for loop above.
 		end
 	end
 
@@ -100,46 +101,49 @@ end
 --this function is the main function for the dl_recorder.
 --it captures all prefabs, and handles all the file writing and json magic.
 local function Capture(inst, channeler)
-	local x, y, z = inst.Transform:GetWorldPosition() 
-	local ents = CheckAndGetValidEntities(inst) 
-	local saved_ents = {} 
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local ents = CheckAndGetValidEntities(inst)
+	local saved_ents = {}
 	local num = tostring(math.random(1000))
-	local text = (inst.components.writeable.text == nil and "returnedTable" .. num) or string.gsub(inst.components.writeable.text, " ", "_")
+	local text = (inst.components.writeable.text == nil and "returnedTable" .. num) or
+		string.gsub(inst.components.writeable.text, " ", "_")
 	local file = io.open(output_file, "r+")
 
+	if saved_ents[text] == nil then
+		saved_ents[text] = {}
+	end
+
+	-- some parameters for customization
+	saved_ents[text].has_tiles = false        --automatically set, you may overwrite. Limits rotation to multiples of 90
+	saved_ents[text].spawn_in_water = false   --controls whether the setpiece can spawn prefabs/tiles on water.
+	saved_ents[text].only_spawn_in_water = false --controls wheter the setpiece can ONLY spawn in water.
+	saved_ents[text].smooth_rorate = false    --if false,  rotateable and with no tiles, setpieces rotate on multiples of 45. if true, rotation is between 0-360
+	saved_ents[text].no_rotation = false      --if true, disables rotation entirely.
+	saved_ents[text].use_angle_away_from_spawn = false
 
 	for k, v in ipairs(ents) do
 		if v ~= inst then
 			local vx, vy, vz = v.Transform:GetWorldPosition()
 			local px, py, pz = vx - x, vy - y, vz - z --this gets the relative coodinates from the recorder.
 
-			if saved_ents[text] == nil then
-				saved_ents[text] = {}
-			end
 
-			-- some parameters for customization
-			saved_ents[text].has_tiles = false  --automatically set, you may overwrite. Limits rotation to multiples of 90
-			saved_ents[text].spawn_in_water = false --controls whether the setpiece can spawn prefabs/tiles on water.
-			saved_ents[text].only_spawn_in_water = false --controls wheter the setpiece can ONLY spawn in water.
-			saved_ents[text].smooth_rorate = false --if false,  rotateable and with no tiles, setpieces rotate on multiples of 45. if true, rotation is between 0-360
-			saved_ents[text].no_rotation = false --if true, disables rotation entirely.
 
-			local thedata = { relative_x = px, relative_y = py, relative_z = pz, v:GetSaveRecord() }
+			local thedata = { relative_x = px, relative_y = py, relative_z = pz, v:GetSaveRecord(), options = v.layout }
 			--this is the data stored for the entity. GetSaveRecord gets all sort of data related to the entity, from deciduoustrees's colour to heatrock heat.
-			
-			if v.prefab == "dl_tileflag" then --if the prefab is a tileflag, some extra data gets added
+
+			if v.prefab == "dl_tileflag" then              --if the prefab is a tileflag, some extra data gets added
 				thedata.tile = TheWorld.Map:GetTileAtPoint(vx, vy, vz) --such as the tile
-				saved_ents[text].has_tiles = true --setting the "has_tiles" parameter to true, so it can only spawn in right angles.
-				saved_ents[text].spawn_in_water = true --and setting this to true as well.
+				saved_ents[text].has_tiles = true          --setting the "has_tiles" parameter to true, so it can only spawn in right angles.
+				saved_ents[text].spawn_in_water = true     --and setting this to true as well.
 			end
 
-			table.insert(saved_ents[text], thedata)--insert the prefab data into the main data table.
+			table.insert(saved_ents[text], thedata) --insert the prefab data into the main data table.
 		end
 	end
 
 	--I would explain this to you if I remembered what it did.
 	if file then
-		local file_str = file:read("*a") 
+		local file_str = file:read("*a")
 		local data
 		local file_data = {}
 
@@ -227,13 +231,7 @@ local function fn()
 
 	inst:ListenForEvent("itemlose", CheckAndGetValidEntities)
 	inst:ListenForEvent("itemget", CheckAndGetValidEntities)
-	inst:ListenForEvent("onremoved", function()
-		for k, v in pairs(Ents) do
-			if v.AnimState ~= nil and v:IsValid() and v:HasTag("DL_VALID") then
-				v.AnimState:SetAddColour(0, 0, 0, 0)
-			end
-		end
-	end)
+	inst:ListenForEvent("onremoved", CheckAndGetValidEntities)
 
 	return inst
 end
@@ -283,7 +281,22 @@ local function TileFlag(inst)
 	return inst
 end
 
-local function SpawnDynamicLayout(inst)
+local function SpawnDynamicLayout(inst, angle_override)
+	if type(angle_override) == "number" then
+		print("angle_override", angle_override)
+		print(math.deg(angle_override))
+	end
+	if inst.layout ~= nil then
+		local layout = weighted_random_choice(inst.layout)
+		print("layout", inst.layout)
+		if layout ~= "End" then
+			inst.components.writeable.text = layout
+		else
+			inst:Remove()
+			return
+		end
+	end
+
 	if inst.components.writeable.text == "" or inst.components.writeable.text == nil then
 		return
 	end
@@ -308,25 +321,41 @@ local function SpawnDynamicLayout(inst)
 		local smooth_rorate = data[inst.components.writeable.text].smooth_rotate
 		local no_rotation = data[inst.components.writeable.text].no_rotation
 		local angles, angle
-
+		local use_angle_away_from_spawn = data[inst.components.writeable.text].use_angle_away_from_spawn
 		if has_tiles then
 			angles = { 0, 90, 180, 270, 360 }
+		else
+			angles = { 0, 45, 90, 135, 180, 215, 270, 315, 360 }
 		end
 
 		if no_rotation then
 			angle = 0
 		elseif smooth_rorate then
-			angle = math.random(360)
+			angle = math.rad(math.random(360))
 		else
 			angle = math.rad(angles[math.random(#angles)])
 		end
 
-		local angle = angle
+		if inst.angle_away ~= nil then
+			angle = inst.angle_away
+		end
 
+		angle = type(angle_override) == "number" and angle_override or angle
+
+		print(angle, inst.angle_away)
 		for k, v in pairs(data[inst.components.writeable.text]) do
-			if type(v) == "table" then
-				local px = math.cos(angle) * (v.relative_x) - math.sin(angle) * (v.relative_z) + x --huge thanks to KorenWaffles for helping with math. because MAN I suck at it.
+			if type(v) == "table" and v.relative_x ~= nil then
+				local px = math.cos(angle) * (v.relative_x) - math.sin(angle) * (v.relative_z) +
+					x --huge thanks to KorenWaffles for helping with math. because MAN I suck at it.
 				local pz = math.sin(angle) * (v.relative_x) + math.cos(angle) * (v.relative_z) + z
+
+				local nearbyents = TheSim:FindEntities(px, v.relative_y + y, pz, 3, nil,
+					{ "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable", "player", "playerghost",
+						"companion", "abigail" })
+				for k, v in pairs(nearbyents) do
+					v:Remove()
+				end
+
 
 				if v.tile ~= nil then
 					local tile_x, tile_z = TheWorld.Map:GetTileCoordsAtPoint(px, v.relative_y + y, pz)
@@ -334,27 +363,29 @@ local function SpawnDynamicLayout(inst)
 						TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
 					end
 				else
-					local nearbyents = TheSim:FindEntities(v.relative_x + x, v.relative_y + y, v.relative_z + z, 2, nil,
-						{ "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable", "player", "playerghost",
-							"companion", "abigail" })
-					for k, v in pairs(nearbyents) do
-						v:Remove()
-					end
-
-					if
-						not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or
-						spawn_in_water or
-						only_spawn_in_water and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz)
-					then
+					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water or only_spawn_in_water and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
 						local prefab = SpawnSaveRecord(v["1"])
+
+						if prefab.prefab == "dl_spawner" and use_angle_away_from_spawn then
+							print("math.rad", math.rad(prefab:GetAngleToPoint(x, 0, z) + 180))
+							print("prefab.angleaway", prefab.angle_away)
+						end
 
 						prefab.Transform:SetPosition(px, v.relative_y + y, pz)
 						prefab:AddTag("noreplaceremove")
+						if prefab.prefab == "dl_spawner" then
+							print("options", v.options)
+							prefab.layout = v.options
+
+							prefab:DoTaskInTime(2.5, function(_inst)
+								SpawnDynamicLayout(_inst, math.atan2(x - px, pz - z) + math.rad(180))
+							end)
+						end
 					end
 				end
 			end
 		end
-		inst:Remove()
+		inst:DoTaskInTime(0, inst.Remove)
 	end
 end
 
@@ -401,14 +432,6 @@ local function spawnerfn()
 		local x, y, z = inst.Transform:GetWorldPosition()
 		local tile_x, tile_y, tile_z = TheWorld.Map:GetTileCenterPoint(x, 0, z)
 		inst.Transform:SetPosition(tile_x, 0, tile_z)
-
-		if inst.layout ~= nil and type(inst.layout) == "string" then
-			inst.components.writeable.text = inst.layout
-		elseif inst.layout ~= nil and type(inst.layout) == "table" then
-			inst.components.writeable.text = weighted_random_choice(inst.layout)
-		end
-
-		SpawnDynamicLayout(inst)
 	end)
 
 	return inst

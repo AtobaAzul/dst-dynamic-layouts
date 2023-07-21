@@ -29,8 +29,6 @@ local containers = GLOBAL.require("containers")
 containers.params.dl_recorder = GLOBAL.deepcopy(containers.params.shadowchester)
 containers.params.dl_recorder.itemtestfn = itemtestfn
 
-
-
 kinds["dl_recorder"] = {
     prompt = GLOBAL.STRINGS.SIGNS.MENU.PROMPT,
     animbank = "ui_board_5x3",
