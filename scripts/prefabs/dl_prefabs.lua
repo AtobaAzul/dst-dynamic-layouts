@@ -377,9 +377,14 @@ local function SpawnLayout(inst, angle_override)
 
 							prefab:DoTaskInTime(0, function(_inst)
 								local _x, _y, _z = _inst.Transform:GetWorldPosition()
-								if  #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) <= 1 then
+								if  prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) < 1  then
+									print("didn't find any blockers!")
+									SpawnLayout(_inst, (use_angle_away_from_spawn and math.atan2(x - px, pz - z) + math.rad(180)) or nil)
+								elseif not prevent_overlap  then
+									print("allows overlap")
 									SpawnLayout(_inst, (use_angle_away_from_spawn and math.atan2(x - px, pz - z) + math.rad(180)) or nil)
 								else
+									print("found a blocker! removing!")
 									_inst:Remove()
 								end
 							end)
