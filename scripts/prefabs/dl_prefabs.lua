@@ -328,7 +328,7 @@ local function SpawnLayout(inst, angle_override)
 		local world_size = TheWorld.Map:GetWorldSize()*4
 		local max_x = world_size/2
 		local max_z = world_size/2
-		local buffer = 40
+		local buffer = 80
 
 		print("has_tiles", has_tiles)
 		print("spawn_in_water", spawn_in_water)
@@ -398,7 +398,7 @@ local function SpawnLayout(inst, angle_override)
 							prefab.layout = v.options
 
 
-							prefab:DoTaskInTime(2 * math.random(), function(_inst)
+							prefab:DoTaskInTime(math.random(), function(_inst)
 								local _x, _y, _z = _inst.Transform:GetWorldPosition()
 								if prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) <= 0 then
 									SpawnLayout(_inst,
