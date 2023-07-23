@@ -1,5 +1,7 @@
 {
     "Connection": {
+        "autotrigger_spawners": true,
+
         "1": {
             "1": {
                 "x": -24,
@@ -140,10 +142,11 @@
         "worldborder_buffer": 80
     },
     "Room": {
+        "autotrigger_spawners": true,
         "reversible": true,
         "group": "Dungeon1",
         "worldborder_buffer": 80,
-
+        "angle_offset": 90,
         "1": {
             "1": {
                 "x": -98,
@@ -480,10 +483,11 @@
         }
     },
     "Center": {
+        "autotrigger_spawners": true,
         "reversible": true,
         "group": "Dungeon1",
         "worldborder_buffer": 80,
-
+        "angle_offset": 90,
         "29": {
             "1": {
                 "data": {
