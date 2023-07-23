@@ -1,6 +1,6 @@
 {
     "Connection": {
-        "autotrigger_spawners": false,
+        "autotrigger_spawners": true,
 
         "1": {
             "1": {
@@ -142,7 +142,7 @@
         "worldborder_buffer": 80
     },
     "Room": {
-        "autotrigger_spawners": false,
+        "autotrigger_spawners": true,
         "reversible": true,
         "group": "Dungeon1",
         "worldborder_buffer": 80,
@@ -483,7 +483,7 @@
         }
     },
     "Center": {
-        "autotrigger_spawners": false,
+        "autotrigger_spawners": true,
         "reversible": true,
         "group": "Dungeon1",
         "worldborder_buffer": 80,

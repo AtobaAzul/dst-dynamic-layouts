@@ -407,7 +407,7 @@ local function SpawnLayout(inst, angle_override, file_path_override)
 							ent.layout = v.options
 
 
-							ent:DoTaskInTime(math.random(), function(_inst)
+							ent:DoTaskInTime(0, function(_inst)
 								local _x, _y, _z = _inst.Transform:GetWorldPosition()
 								if prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) <= 0 or not prevent_overlap then
 									print(autotrigger_spawners)
