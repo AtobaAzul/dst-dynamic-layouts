@@ -61,10 +61,6 @@ function GLOBAL.Map:SetTile(x, y, tile, data, ...)
     _SetTile(self, x, y, tile, data, ...)
 end
 
-AddPlayerPostInit(function(inst)
-    inst:AddComponent("reviveablecorpse")
-end)
-
 AddPrefabPostInit("world", function(inst)
     if not GLOBAL.TheWorld.ismastersim then return end
 
