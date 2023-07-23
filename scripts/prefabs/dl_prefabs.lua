@@ -117,6 +117,7 @@ local function Capture(inst, channeler)
 	saved_ents[text].reversible                = false
 	saved_ents[text].group                     = nil
 	saved_ents[text].worldborder_buffer        = 0
+	saved_ents[text].autotrigger_spawners      = true
 
 	for k, v in ipairs(ents) do
 		if v ~= inst then
@@ -314,6 +315,8 @@ local function SpawnLayout(inst, angle_override, file_path_override)
 		local reversible = data[inst.components.writeable.text].reversible
 		local group = data[inst.components.writeable.text].group
 		local worldborder_buffer = data[inst.components.writeable.text].worldborder_buffer
+		local autotrigger_spawners = data[inst.components.writeable.text].autotrigger_spawners
+
 		local angles, angle
 		if group ~= nil and reversible then
 			if TheWorld.dl_setpieces == nil then
@@ -406,28 +409,30 @@ local function SpawnLayout(inst, angle_override, file_path_override)
 
 							ent:DoTaskInTime(math.random(), function(_inst)
 								local _x, _y, _z = _inst.Transform:GetWorldPosition()
-								if prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) <= 0 then
-									SpawnLayout(_inst,
-										(use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil) --uuuuughhghgh this is a mess. depending on how you make the setpiece these numbers need to change.
-									_inst:Remove()                                                    --TODO: Fix that. Set the order of these in the setpiece data, also the turn angle.
-
-									return
-								elseif not prevent_overlap then
-									SpawnLayout(_inst,
-										(use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(90)) or nil)
+								if prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) <= 0 or not prevent_overlap then
+									print(autotrigger_spawners)
+									if autotrigger_spawners then
+										print("what the fuck don't do that")
+										SpawnLayout(_inst, (use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil)
+									else
+										_inst.AnimState:SetMultColour(0,0,0,0)
+										_inst:AddTag("NOCLICK")
+										_inst:AddTag("NOBLOCK")
+										_inst.angle_away = (use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil
+										_inst:ListenForEvent("spawn_dl_"..group, SpawnLayout)
+									end
+								else
 									_inst:Remove()
-									return
 								end
-
-								_inst:Remove()
 							end)
 						end
 					end
 				end
 			end
 		end
-		inst:DoTaskInTime(0, inst.Remove)
 	end
+
+	inst:DoTaskInTime(0, inst.Remove)
 end
 
 local function spawnerfn()
