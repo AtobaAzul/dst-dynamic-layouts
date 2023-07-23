@@ -2,43 +2,115 @@
     "Connection": {
         "1": {
             "1": {
-                "x": -362,
+                "x": -24,
                 "prefab": "dl_tileflag",
-                "z": -186
+                "z": 0
             },
-            "tile": 4,
-
+            "tile": 2,
             "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "2": {
+            "1": {
+                "x": -20,
+                "prefab": "dl_tileflag",
+                "z": 0
+            },
+            "tile": 2,
+            "relative_x": 4,
             "relative_y": 0,
             "relative_z": 0
         },
         "3": {
             "1": {
-                "x": -362,
+                "x": -16,
                 "prefab": "dl_tileflag",
-                "z": -194
+                "z": 0
             },
-            "tile": 4,
-
-            "relative_x": 0,
+            "tile": 2,
+            "relative_x": 8,
             "relative_y": 0,
-            "relative_z": -8
+            "relative_z": 0
         },
-        "2": {
-            "1": {
-                "x": -362,
-                "prefab": "dl_tileflag",
-                "z": -190
-            },
-            "tile": 4,
-
-            "relative_x": 0,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        "no_rotation": false,
-        "prevent_overlap": true,
         "4": {
+            "1": {
+                "x": -12,
+                "prefab": "dl_tileflag",
+                "z": 0
+            },
+            "tile": 2,
+            "relative_x": 12,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "5": {
+            "1": {
+                "x": -8,
+                "prefab": "dl_tileflag",
+                "z": 0
+            },
+            "tile": 2,
+            "relative_x": 16,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "6": {
+            "1": {
+                "x": -4,
+                "prefab": "dl_tileflag",
+                "z": 0
+            },
+            "tile": 2,
+            "relative_x": 20,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "7": {
+            "1": {
+                "x": 0,
+                "prefab": "dl_tileflag",
+                "z": 0
+            },
+            "tile": 2,
+            "relative_x": 24,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "8": {
+            "1": {
+                "x": 4,
+                "prefab": "dl_tileflag",
+                "z": 0
+            },
+            "tile": 2,
+            "relative_x": 28,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "9": {
+            "1": {
+                "x": 8,
+                "prefab": "dl_tileflag",
+                "z": 0
+            },
+            "tile": 2,
+            "relative_x": 32,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "10": {
+            "1": {
+                "x": 12,
+                "prefab": "dl_tileflag",
+                "z": 0
+            },
+            "tile": 2,
+            "relative_x": 36,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "11": {
             "1": {
                 "data": {
                     "writeable": {
@@ -47,372 +119,373 @@
                         "userid": "KU_L8KAOObC"
                     }
                 },
-                "x": -362,
+                "x": 24,
                 "prefab": "dl_spawner",
-                "z": -202
+                "z": 0
             },
-            "relative_x": 0,
+            "relative_x": 48,
             "relative_y": 0,
-            "relative_z": -16
+            "relative_z": 0
         },
-        "only_spawn_in_water": false,
         "smooth_rorate": false,
         "use_angle_away_from_spawn": true,
+        "prevent_overlap": true,
         "spawn_in_water": true,
-        "has_tiles": true
+        "has_tiles": true,
+        "only_spawn_in_water": false,
+        "no_rotation": false,
+        "angle_offset": 90,
+        "reversible": true,
+        "group": "Dungeon1",
+        "worldborder_buffer": 80
     },
     "Room": {
+        "reversible": true,
+        "group": "Dungeon1",
+        "worldborder_buffer": 80,
 
         "1": {
             "1": {
-                "x": -410,
+                "x": -98,
                 "prefab": "dl_tileflag",
-                "z": 214
+                "z": -162
             },
-            "tile": 4,
-
+            "tile": 262,
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": 0
         },
-        "40": {
+        "3": {
             "1": {
-                "x": -318,
-                "prefab": "dl_blocker",
-                "z": -170
+                "x": -102,
+                "prefab": "dl_tileflag",
+                "z": -162
             },
-            "relative_x": 0,
+            "tile": 262,
+            "relative_x": -4,
             "relative_y": 0,
             "relative_z": 0
         },
         "2": {
             "1": {
-                "x": -410,
+                "x": -98,
                 "prefab": "dl_tileflag",
-                "z": 218
+                "z": -166
             },
-            "tile": 4,
-
+            "tile": 262,
             "relative_x": 0,
             "relative_y": 0,
-            "relative_z": 4
+            "relative_z": -4
         },
-        "3": {
+        "5": {
             "1": {
-                "x": -406,
+                "x": -94,
                 "prefab": "dl_tileflag",
-                "z": 214
+                "z": -162
             },
-            "tile": 4,
-
+            "tile": 262,
             "relative_x": 4,
             "relative_y": 0,
             "relative_z": 0
         },
         "4": {
             "1": {
-                "x": -414,
+                "x": -98,
                 "prefab": "dl_tileflag",
-                "z": 214
+                "z": -158
             },
-            "tile": 4,
-
-            "relative_x": -4,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        "5": {
-            "1": {
-                "x": -410,
-                "prefab": "dl_tileflag",
-                "z": 210
-            },
-            "tile": 4,
-
+            "tile": 262,
             "relative_x": 0,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        "6": {
-            "1": {
-                "x": -414,
-                "prefab": "dl_tileflag",
-                "z": 218
-            },
-            "tile": 4,
-
-            "relative_x": -4,
             "relative_y": 0,
             "relative_z": 4
         },
         "7": {
             "1": {
-                "x": -406,
+                "x": -102,
                 "prefab": "dl_tileflag",
-                "z": 218
+                "z": -158
             },
-            "tile": 4,
-
-            "relative_x": 4,
+            "tile": 262,
+            "relative_x": -4,
             "relative_y": 0,
             "relative_z": 4
         },
-        "8": {
+        "6": {
             "1": {
-                "x": -414,
+                "x": -102,
                 "prefab": "dl_tileflag",
-                "z": 210
+                "z": -166
             },
-            "tile": 4,
-
+            "tile": 262,
             "relative_x": -4,
             "relative_y": 0,
             "relative_z": -4
         },
         "9": {
             "1": {
-                "x": -406,
+                "x": -94,
                 "prefab": "dl_tileflag",
-                "z": 210
+                "z": -158
             },
-            "tile": 4,
-
+            "tile": 262,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "8": {
+            "1": {
+                "x": -94,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 262,
             "relative_x": 4,
             "relative_y": 0,
             "relative_z": -4
         },
-        "10": {
+        "27": {
             "1": {
-                "x": -418,
+                "x": -98,
                 "prefab": "dl_spawner",
-                "z": 214
+                "z": -150
             },
             "options": {
                 "Connection": 1,
-                "End": 1
+                "End": 3
             },
+            "relative_z": 12,
+            "relative_x": 0,
+            "relative_y": 0
+        },
+        "17": {
+            "1": {
+                "x": -106,
+                "prefab": "dl_tileflag",
+                "z": -158
+            },
+            "tile": 262,
             "relative_x": -8,
             "relative_y": 0,
-            "relative_z": 0
-        },
-        "11": {
-            "1": {
-                "x": -402,
-                "prefab": "dl_spawner",
-                "z": 214
-            },
-            "options": {
-                "Connection": 1,
-                "End": 1
-            },
-            "relative_x": 8,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        "12": {
-            "1": {
-                "x": -410,
-                "prefab": "dl_spawner",
-                "z": 222
-            },
-            "options": {
-                "Connection": 1,
-                "End": 1
-            },
-            "relative_x": 0,
-            "relative_y": 0,
-            "relative_z": 8
-        },
-        "smooth_rorate": false,
-        "use_angle_away_from_spawn": true,
-        "has_tiles": true,
-        "no_rotation": false,
-        "only_spawn_in_water": false,
-        "spawn_in_water": true,
-        "prevent_overlap": true
-    },
-    "Center": {
-        "prevent_overlap": true,
-        "40": {
-            "1": {
-                "x": -318,
-                "prefab": "dl_blocker",
-                "z": -170
-            },
-            "relative_x": 0,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        "spawn_in_water": true,
-        "has_tiles": true,
-        "smooth_rorate": false,
-        "only_spawn_in_water": false,
-        "1": {
-            "1": {
-                "x": -322,
-                "prefab": "dl_tileflag",
-                "z": -170
-            },
-            "tile": 4,
-            "relative_x": 0,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        "5": {
-            "1": {
-                "x": -318,
-                "prefab": "dl_tileflag",
-                "z": -170
-            },
-            "tile": 4,
-            "relative_x": 4,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        "3": {
-            "1": {
-                "x": -322,
-                "prefab": "dl_tileflag",
-                "z": -174
-            },
-            "tile": 4,
-            "relative_x": 0,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        "2": {
-            "1": {
-                "x": -326,
-                "prefab": "dl_tileflag",
-                "z": -170
-            },
-            "tile": 4,
-            "relative_x": -4,
-            "relative_y": 0,
-            "relative_z": 0
-        },
-        "no_rotation": false,
-        "4": {
-            "1": {
-                "x": -322,
-                "prefab": "dl_tileflag",
-                "z": -166
-            },
-            "tile": 4,
-            "relative_x": 0,
-            "relative_y": 0,
             "relative_z": 4
-        },
-        "7": {
-            "1": {
-                "x": -326,
-                "prefab": "dl_tileflag",
-                "z": -166
-            },
-            "tile": 4,
-            "relative_x": -4,
-            "relative_y": 0,
-            "relative_z": 4
-        },
-        "6": {
-            "1": {
-                "x": -326,
-                "prefab": "dl_tileflag",
-                "z": -174
-            },
-            "tile": 4,
-            "relative_x": -4,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        "9": {
-            "1": {
-                "x": -318,
-                "prefab": "dl_tileflag",
-                "z": -174
-            },
-            "tile": 4,
-            "relative_x": 4,
-            "relative_y": 0,
-            "relative_z": -4
-        },
-        "8": {
-            "1": {
-                "x": -318,
-                "prefab": "dl_tileflag",
-                "z": -166
-            },
-            "tile": 4,
-            "relative_x": 4,
-            "relative_y": 0,
-            "relative_z": 4
-        },
-        "use_angle_away_from_spawn": true,
-        "14": {
-            "1": {
-                "x": -318,
-                "prefab": "dl_blocker",
-                "z": -170
-            },
-            "relative_x": 0,
-            "relative_y": 0,
-            "relative_z": 0
         },
         "13": {
             "1": {
-                "prefab": "dl_spawner",
-                "x": -314,
-                "data": {
-                    "writeable": {
-                        "netid": "76561198830730990",
-                        "text": "Connection",
-                        "userid": "KU_L8KAOObC"
-                    }
-                },
-                "z": -170
+                "x": -90,
+                "prefab": "dl_tileflag",
+                "z": -162
             },
+            "tile": 262,
             "relative_x": 8,
             "relative_y": 0,
             "relative_z": 0
         },
-        "12": {
+        "21": {
             "1": {
-                "prefab": "dl_spawner",
-                "x": -322,
-                "data": {
-                    "writeable": {
-                        "netid": "76561198830730990",
-                        "text": "Connection",
-                        "userid": "KU_L8KAOObC"
-                    }
-                },
-                "z": -162
+                "x": -94,
+                "prefab": "dl_tileflag",
+                "z": -154
             },
-            "relative_x": 0,
+            "tile": 262,
+            "relative_x": 4,
             "relative_y": 0,
             "relative_z": 8
         },
         "11": {
             "1": {
-                "prefab": "dl_spawner",
-                "x": -330,
-                "data": {
-                    "writeable": {
-                        "netid": "76561198830730990",
-                        "text": "Connection",
-                        "userid": "KU_L8KAOObC"
-                    }
-                },
-                "z": -170
+                "x": -106,
+                "prefab": "dl_tileflag",
+                "z": -162
             },
+            "tile": 262,
             "relative_x": -8,
             "relative_y": 0,
             "relative_z": 0
         },
+        "23": {
+            "1": {
+                "x": -106,
+                "prefab": "dl_tileflag",
+                "z": -154
+            },
+            "tile": 262,
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "28": {
+            "1": {
+                "x": -86,
+                "prefab": "dl_spawner",
+                "z": -162
+            },
+            "options": {
+                "Connection": 3,
+                "End": 1
+            },
+            "relative_z": 0,
+            "relative_x": 12,
+            "relative_y": 0
+        },
+        "spawn_in_water": true,
+        "only_spawn_in_water": false,
+        "no_rotation": false,
+        "12": {
+            "1": {
+                "x": -98,
+                "prefab": "dl_tileflag",
+                "z": -154
+            },
+            "tile": 262,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "smooth_rorate": false,
+        "has_tiles": true,
+        "16": {
+            "1": {
+                "x": -102,
+                "prefab": "dl_tileflag",
+                "z": -154
+            },
+            "tile": 262,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "15": {
+            "1": {
+                "x": -106,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 262,
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "14": {
+            "1": {
+                "x": -102,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 262,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        "18": {
+            "1": {
+                "x": -90,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 262,
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "25": {
+            "1": {
+                "x": -90,
+                "prefab": "dl_tileflag",
+                "z": -154
+            },
+            "tile": 262,
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "19": {
+            "1": {
+                "x": -94,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 262,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        "prevent_overlap": true,
+        "24": {
+            "1": {
+                "x": -90,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 262,
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        "use_angle_away_from_spawn": true,
+        "26": {
+            "1": {
+                "x": -98,
+                "prefab": "dl_spawner",
+                "z": -174
+            },
+            "options": {
+                "Connection": 1,
+                "End": 3
+            },
+            "relative_z": -12,
+            "relative_x": 0,
+            "relative_y": 0
+        },
+        "20": {
+            "1": {
+                "x": -90,
+                "prefab": "dl_tileflag",
+                "z": -158
+            },
+            "tile": 262,
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "30": {
+            "1": {
+                "x": -110.426,
+                "prefab": "dl_blocker",
+                "z": -153.329
+            },
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "22": {
+            "1": {
+                "x": -106,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 262,
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": -8
+        },
         "10": {
             "1": {
-                "prefab": "dl_spawner",
-                "x": -322,
+                "x": -98,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 262,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -8
+        }
+    },
+    "Center": {
+        "reversible": true,
+        "group": "Dungeon1",
+        "worldborder_buffer": 80,
+
+        "29": {
+            "1": {
                 "data": {
                     "writeable": {
                         "netid": "76561198830730990",
@@ -420,8 +493,353 @@
                         "userid": "KU_L8KAOObC"
                     }
                 },
-                "z": -178
+                "x": -86,
+                "prefab": "dl_spawner",
+                "z": -162
             },
+            "relative_x": 12,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "1": {
+            "1": {
+                "x": -98,
+                "prefab": "dl_tileflag",
+                "z": -162
+            },
+            "tile": 43,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "3": {
+            "1": {
+                "x": -102,
+                "prefab": "dl_tileflag",
+                "z": -162
+            },
+            "tile": 43,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "2": {
+            "1": {
+                "x": -98,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 43,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "5": {
+            "1": {
+                "x": -94,
+                "prefab": "dl_tileflag",
+                "z": -162
+            },
+            "tile": 43,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "4": {
+            "1": {
+                "x": -98,
+                "prefab": "dl_tileflag",
+                "z": -158
+            },
+            "tile": 43,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "7": {
+            "1": {
+                "x": -102,
+                "prefab": "dl_tileflag",
+                "z": -158
+            },
+            "tile": 43,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "6": {
+            "1": {
+                "x": -102,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 43,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "9": {
+            "1": {
+                "x": -94,
+                "prefab": "dl_tileflag",
+                "z": -158
+            },
+            "tile": 43,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "8": {
+            "1": {
+                "x": -94,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 43,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "27": {
+            "1": {
+                "data": {
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Connection",
+                        "userid": "KU_L8KAOObC"
+                    }
+                },
+                "x": -98,
+                "prefab": "dl_spawner",
+                "z": -174
+            },
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": -12
+        },
+        "17": {
+            "1": {
+                "x": -106,
+                "prefab": "dl_tileflag",
+                "z": -158
+            },
+            "tile": 43,
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "13": {
+            "1": {
+                "x": -90,
+                "prefab": "dl_tileflag",
+                "z": -162
+            },
+            "tile": 43,
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "21": {
+            "1": {
+                "x": -94,
+                "prefab": "dl_tileflag",
+                "z": -154
+            },
+            "tile": 43,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "11": {
+            "1": {
+                "x": -106,
+                "prefab": "dl_tileflag",
+                "z": -162
+            },
+            "tile": 43,
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "23": {
+            "1": {
+                "x": -106,
+                "prefab": "dl_tileflag",
+                "z": -154
+            },
+            "tile": 43,
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "28": {
+            "1": {
+                "data": {
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Connection",
+                        "userid": "KU_L8KAOObC"
+                    }
+                },
+                "x": -98,
+                "prefab": "dl_spawner",
+                "z": -150
+            },
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 12
+        },
+        "has_tiles": true,
+        "only_spawn_in_water": false,
+        "no_rotation": false,
+        "12": {
+            "1": {
+                "x": -98,
+                "prefab": "dl_tileflag",
+                "z": -154
+            },
+            "tile": 43,
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "spawn_in_water": true,
+        "smooth_rorate": false,
+        "16": {
+            "1": {
+                "x": -102,
+                "prefab": "dl_tileflag",
+                "z": -154
+            },
+            "tile": 43,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "15": {
+            "1": {
+                "x": -102,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 43,
+            "relative_x": -4,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        "14": {
+            "1": {
+                "x": -106,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 43,
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "18": {
+            "1": {
+                "x": -94,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 43,
+            "relative_x": 4,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        "25": {
+            "1": {
+                "x": -90,
+                "prefab": "dl_tileflag",
+                "z": -154
+            },
+            "tile": 43,
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": 8
+        },
+        "19": {
+            "1": {
+                "x": -90,
+                "prefab": "dl_tileflag",
+                "z": -166
+            },
+            "tile": 43,
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": -4
+        },
+        "prevent_overlap": true,
+        "24": {
+            "1": {
+                "x": -90,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 43,
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        "use_angle_away_from_spawn": true,
+        "26": {
+            "1": {
+                "x": -110,
+                "prefab": "dl_spawner",
+                "z": -162
+            },
+            "relative_x": -12,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "20": {
+            "1": {
+                "x": -90,
+                "prefab": "dl_tileflag",
+                "z": -158
+            },
+            "tile": 43,
+            "relative_x": 8,
+            "relative_y": 0,
+            "relative_z": 4
+        },
+        "30": {
+            "1": {
+                "data": {
+                    "writeable": {
+                        "netid": "76561198830730990",
+                        "text": "Connection",
+                        "userid": "KU_L8KAOObC"
+                    }
+                },
+                "x": -110.426,
+                "prefab": "dl_blocker",
+                "z": -153.329
+            },
+            "relative_x": 0,
+            "relative_y": 0,
+            "relative_z": 0
+        },
+        "22": {
+            "1": {
+                "x": -106,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 43,
+            "relative_x": -8,
+            "relative_y": 0,
+            "relative_z": -8
+        },
+        "10": {
+            "1": {
+                "x": -98,
+                "prefab": "dl_tileflag",
+                "z": -170
+            },
+            "tile": 43,
             "relative_x": 0,
             "relative_y": 0,
             "relative_z": -8

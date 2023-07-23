@@ -73,7 +73,7 @@ if TUNING.DSTU.IMPASSBLES then
 end
 
 env.AddPrefabPostInitAny(function(inst)
-    if TheWorld and TheWorld.shard == inst then
+    if GLOBAL.TheWorld and GLOBAL.TheWorld.shard == inst then
         -- inst:AddComponent("shard_acidmushrooms")
     end
 end)
@@ -219,7 +219,7 @@ local function PrepareVisibility(inst)
 end
 
 env.AddPrefabPostInitAny(function(inst)
-    if TheWorld.ismastersim then return inst end
+    if GLOBAL.TheWorld.ismastersim then return inst end
     if ThePlayer ~= inst and (inst.entity or inst.replica.inventoryitem) and (inst:HasTag("monster") or inst:HasTag("smallcreature") or inst:HasTag("EPIC") or inst:HasTag("animal") or inst:HasTag("largecreature") or inst:HasTag("character") or inst.prefab == "carrot_planted" or inst.prefab == "red_mushroom" or inst.prefab == "green_mushroom" or inst.prefab == "blue_mushroom" or inst.prefab == "lichen" or inst:HasTag("oceanfishinghookable")) then
         -- if inst.prefab == "shadowheart" then
         -- PrepareVisibility(inst)

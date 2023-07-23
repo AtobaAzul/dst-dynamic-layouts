@@ -1,24 +1,21 @@
 require "prefabutil"
-require "json"                 --required for the json sheneniganery.
+require "json"
 
-local io = require("io")       --required for the file manipulation things
+local io = require("io")
 local output_file = TUNING.DL.MODROOT ..
-	"scripts/capture_output.json" --the file wheere captured prefags will be recorded to.
-
-local NO_CAPTURE_TAGS =        --all the tags that shouldn't be captured
-{
-	"NOCAPTURE",               --this includes the capturer itself
-	"player",                  --players
-	"bird",                    --hecking birds man
-	"NOCLICK",                 --stuff you can't click
-	"CLASSIFIED",              --stuff you can't see
-	"FX",                      --FX, usually temporary stuff
-	"INLIMBO",                 --stuff like items inside containers. so they don't get registered twice. Among other things.
-	"smalloceancreature",      --hecking fishes man.
+	"scripts/capture_output.json"
+local NO_CAPTURE_TAGS = {
+	"NOCAPTURE",
+	"player",
+	"bird",
+	"NOCLICK",
+	"CLASSIFIED",
+	"FX",
+	"INLIMBO",
+	"smalloceancreature",
 	"DECOR",
 }
 
---this function checks for valid entitites, highlights them green and returns them.
 local function CheckAndGetValidEntities(inst, reset)
 	for k, v in pairs(Ents) do --iterates over all entitites to clear the highlighting on existing things.
 		if v.AnimState ~= nil and v:IsValid() and v:HasTag("DL_VALID") then
@@ -26,8 +23,8 @@ local function CheckAndGetValidEntities(inst, reset)
 		end
 	end
 
-	if reset == true then --"itemget" event pushes the second param as some table. Need to do explicit true check
-		return         --reset param is for resetting the highlighting only.
+	if reset == true then
+		return
 	end
 
 	inst.range = 0
@@ -48,17 +45,16 @@ local function CheckAndGetValidEntities(inst, reset)
 	local ents = TheSim:FindEntities(x, y, z, inst.range, nil, NO_CAPTURE_TAGS) --find all entities around
 
 	for k, v in pairs(ents) do
-		if v.AnimState ~= nil and v ~= inst then --if they're valid
-			v.AnimState:SetAddColour(0, 1, 0, 0) --highlight them green!
-			v:AddTag("DL_VALID")           --and add this tag, for use in the first for loop above.
+		if v.AnimState ~= nil and v ~= inst then
+			v.AnimState:SetAddColour(0, 1, 0, 0)
+			v:AddTag("DL_VALID")
 		end
 	end
 
-	return ents --and return the entities so we can use this function to shorten some code in the Capture function below
+	return ents
 end
 
 
---some main cosmetic functions, but also includes checking valid entities
 local function onopen(inst)
 	if not inst:HasTag("burnt") then
 		inst.AnimState:PlayAnimation("open")
@@ -78,7 +74,6 @@ local function onclose(inst)
 	CheckAndGetValidEntities(inst)
 end
 
---remove itself if it gets hammered.
 local function onhammered(inst, worker)
 	inst:Remove()
 end
@@ -87,7 +82,6 @@ local function onhit(inst, worker)
 	inst:Remove()
 end
 
---I'm pretty sure this goes unused.
 local function onbuilt(inst)
 	inst.AnimState:PlayAnimation("place")
 	inst.AnimState:PushAnimation("closed", false)
@@ -98,8 +92,6 @@ local function OnStopChanneling(inst)
 	inst.channeler = nil
 end
 
---this function is the main function for the dl_recorder.
---it captures all prefabs, and handles all the file writing and json magic.
 local function Capture(inst, channeler)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	local ents = CheckAndGetValidEntities(inst)
@@ -110,35 +102,38 @@ local function Capture(inst, channeler)
 	local file = io.open(output_file, "r+")
 
 	if saved_ents[text] == nil then
-		saved_ents[text] = {} --define the value of that key as a table.
+		saved_ents[text] = {}
 	end
 
-	-- some parameters for customization
-	saved_ents[text].has_tiles = false        --automatically set, you may overwrite. Limits rotation to multiples of 90
-	saved_ents[text].spawn_in_water = false   --controls whether the setpiece can spawn prefabs/tiles on water.
-	saved_ents[text].only_spawn_in_water = false --controls wheter the setpiece can ONLY spawn in water.
-	saved_ents[text].smooth_rorate = false    --if false,  rotateable and with no tiles, setpieces rotate on multiples of 45. if true, rotation is between 0-360
-	saved_ents[text].no_rotation = false      --if true, disables rotation entirely.
+
+	saved_ents[text].has_tiles                 = false
+	saved_ents[text].spawn_in_water            = false
+	saved_ents[text].only_spawn_in_water       = false
+	saved_ents[text].smooth_rotate             = false
+	saved_ents[text].no_rotation               = false
 	saved_ents[text].use_angle_away_from_spawn = false
-	saved_ents[text].prevent_overlap = true
+	saved_ents[text].angle_offset              = 0
+	saved_ents[text].prevent_overlap           = true
+	saved_ents[text].reversible                = false
+	saved_ents[text].group                     = nil
+	saved_ents[text].worldborder_buffer        = 0
 
 	for k, v in ipairs(ents) do
 		if v ~= inst then
 			local vx, vy, vz = v.Transform:GetWorldPosition()
-			local px, py, pz = vx - x, vy - y, vz - z --this gets the relative coodinates from the recorder.
+			local px, py, pz = vx - x, vy - y, vz - z
 
 
 
 			local thedata = { relative_x = px, relative_y = py, relative_z = pz, v:GetSaveRecord(), options = v.layout }
-			--this is the data stored for the entity. GetSaveRecord gets all sort of data related to the entity, from deciduoustrees's colour to heatrock heat.
 
-			if v.prefab == "dl_tileflag" then              --if the prefab is a tileflag, some extra data gets added
-				thedata.tile = TheWorld.Map:GetTileAtPoint(vx, vy, vz) --such as the tile
-				saved_ents[text].has_tiles = true          --setting the "has_tiles" parameter to true, so it can only spawn in right angles.
-				saved_ents[text].spawn_in_water = true     --and setting this to true as well.
+			if v.prefab == "dl_tileflag" then
+				thedata.tile = TheWorld.Map:GetTileAtPoint(vx, vy, vz)
+				saved_ents[text].has_tiles = true
+				saved_ents[text].spawn_in_water = true
 			end
 
-			table.insert(saved_ents[text], thedata) --insert the prefab data into the main data table.
+			table.insert(saved_ents[text], thedata)
 		end
 	end
 
@@ -219,7 +214,6 @@ local function fn()
 	inst:AddComponent("channelable")
 	inst.components.channelable:SetChannelingFn(Capture, OnStopChanneling)
 	inst.components.channelable.use_channel_longaction_noloop = true
-	-- inst.components.channelable.skip_state_stopchanneling = true
 	inst.components.channelable.skip_state_channeling = true
 
 	inst:DoTaskInTime(0, function(inst)
@@ -280,7 +274,7 @@ local function TileFlag(inst)
 	return inst
 end
 
-local function SpawnLayout(inst, angle_override)
+local function SpawnLayout(inst, angle_override, file_path_override)
 	if inst.layout ~= nil then                       --the inst.layout table is a table that has different variants, or options avaible.
 		local layout = weighted_random_choice(inst.layout) --if it is avaible, then it picks one.
 		if layout ~= "End" then
@@ -295,7 +289,8 @@ local function SpawnLayout(inst, angle_override)
 		return
 	end
 
-	local file = io.open(output_file, "r+")
+	local file_path = file_path_override ~= nil and file_path_override or output_file
+	local file = io.open(file_path, "r+")
 	local x, y, z = inst.Transform:GetWorldPosition()
 
 	if file then
@@ -308,27 +303,36 @@ local function SpawnLayout(inst, angle_override)
 			return
 		end
 
-		local has_tiles = data[inst.components.writeable.text]
-			.has_tiles        --Automatically set. defines whether the setpiece will rotate in 45° angles or 90, if it has tiles, it's gonna rotate in 90 to prevent tiles being wierd.
-		local spawn_in_water = data[inst.components.writeable.text]
-			.spawn_in_water   --defines whether a setpiece should spawn tiles and prefabs on water. Defaults to false, but is automatically set to true if there's tiles.
-		local only_spawn_in_water = data[inst.components.writeable.text]
-			.only_spawn_in_water --defines whether a setpiece should spawn tiles and prefabs ONLY on water. Defaults to false.
-		local smooth_rorate = data[inst.components.writeable.text]
-			.smooth_rotate    --defines whether the setpiece should rotate in a completely random angle. Defaults to false.
-		local no_rotation = data[inst.components.writeable.text]
-			.no_rotation      --defines whether the setpiece should rotate at all, defaults to false
-		local use_angle_away_from_spawn = data[inst.components.writeable.text]
-			.use_angle_away_from_spawn --defines whether spawners spawned by this setpiece should rotate their setpiece away from this setpiece's spoawner.
-		local prevent_overlap = data[inst.components.writeable.text]
-			.prevent_overlap  --prevents the setpiece from spawning where a previous setpiece spawned.
+		local has_tiles = data[inst.components.writeable.text].has_tiles
+		local spawn_in_water = data[inst.components.writeable.text].spawn_in_water
+		local only_spawn_in_water = data[inst.components.writeable.text].only_spawn_in_water
+		local smooth_rorate = data[inst.components.writeable.text].smooth_rotate
+		local no_rotation = data[inst.components.writeable.text].no_rotation
+		local use_angle_away_from_spawn = data[inst.components.writeable.text].use_angle_away_from_spawn
+		local angle_offset = data[inst.components.writeable.text].angle_offset
+		local prevent_overlap = data[inst.components.writeable.text].prevent_overlap
+		local reversible = data[inst.components.writeable.text].reversible
+		local group = data[inst.components.writeable.text].group
+		local worldborder_buffer = data[inst.components.writeable.text].worldborder_buffer
 		local angles, angle
+		if group ~= nil and reversible then
+			if TheWorld.dl_setpieces == nil then
+				TheWorld.dl_setpieces = {}
+			end
+			if TheWorld.dl_setpieces[group] == nil then
+				TheWorld.dl_setpieces[group] = {}
+			end
+			if TheWorld.dl_setpieces[group].tiles == nil then
+				TheWorld.dl_setpieces[group].tiles = {}
+			end
+			if TheWorld.dl_setpieces[group].prefabs == nil then
+				TheWorld.dl_setpieces[group].prefabs = {}
+			end
+		end
 
-
-		local world_size = TheWorld.Map:GetWorldSize()*4
-		local max_x = world_size/2
-		local max_z = world_size/2
-		local buffer = 80
+		local world_size = TheWorld.Map:GetWorldSize() * 4
+		local max_x = world_size / 2
+		local max_z = world_size / 2
 
 		print("has_tiles", has_tiles)
 		print("spawn_in_water", spawn_in_water)
@@ -361,16 +365,19 @@ local function SpawnLayout(inst, angle_override)
 					x --huge thanks to KorenWaffles for helping with math. because MAN I suck at it.
 				local pz = math.sin(angle) * (v.relative_x) + math.cos(angle) * (v.relative_z) + z
 
-				if math.abs(px) >= max_x-buffer or math.abs(pz) >= max_z-buffer then
+				if math.abs(px) >= max_x - worldborder_buffer or math.abs(pz) >= max_z - worldborder_buffer then
 					print("too close to world border!!!!!")
 					break
 				end
-
-				local nearbyents = TheSim:FindEntities(px, v.relative_y + y, pz, 3, nil,
-					{ "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable", "player", "playerghost",
-						"companion", "abigail" })
-				for k, v in pairs(nearbyents) do
-					v:Remove()
+				if reversible then
+					local nearbyents = TheSim:FindEntities(px, v.relative_y + y, pz, 4, nil,
+						{ "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable", "player", "playerghost", "character", "multiplayer_portal",
+							"companion", "abigail" })
+					for k, v in pairs(nearbyents) do
+						local data = v:GetSaveRecord()
+						table.insert(TheWorld.dl_setpieces[group].prefabs, data)
+						v:Remove()
+					end
 				end
 
 				if v.tile ~= nil then
@@ -382,28 +389,27 @@ local function SpawnLayout(inst, angle_override)
 
 					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water then
 						if v.tile == WORLD_TILES.MONKEY_DOCK then
-								TheWorld.components.dockmanager:CreateDockAtPoint(px, v.relative_y + y, pz, WORLD_TILES.MONKEY_DOCK)
+							TheWorld.components.dockmanager:CreateDockAtPoint(px, v.relative_y + y, pz, WORLD_TILES.MONKEY_DOCK)
 						else
-							print(tile_x, tile_z)
-								TheWorld.Map:SetTile(tile_x, tile_z, v.tile)
+							TheWorld.Map:SetTile(tile_x, tile_z, v.tile, { group = group, reversible = reversible })
 						end
 					end
 				else
 					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water or only_spawn_in_water and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
-						local prefab = SpawnSaveRecord(v["1"])
+						local ent = SpawnSaveRecord(v["1"])
+						ent.group = group
+						ent.Transform:SetPosition(px, v.relative_y + y, pz)
+						ent:AddTag("noreplaceremove")
+						if ent.prefab == "dl_spawner" then
+							ent.layout = v.options
 
-						prefab.Transform:SetPosition(px, v.relative_y + y, pz)
-						prefab:AddTag("noreplaceremove")
-						if prefab.prefab == "dl_spawner" then
-							prefab.layout = v.options
 
-
-							prefab:DoTaskInTime(math.random(), function(_inst)
+							ent:DoTaskInTime(math.random(), function(_inst)
 								local _x, _y, _z = _inst.Transform:GetWorldPosition()
 								if prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) <= 0 then
 									SpawnLayout(_inst,
-										(use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(90)) or nil) --uuuuughhghgh this is a mess. depending on how you make the setpiece these numbers need to change.
-									_inst:Remove()                                         --TODO: Fix that. Set the order of these in the setpiece data, also the turn angle.
+										(use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil) --uuuuughhghgh this is a mess. depending on how you make the setpiece these numbers need to change.
+									_inst:Remove()                                                    --TODO: Fix that. Set the order of these in the setpiece data, also the turn angle.
 
 									return
 								elseif not prevent_overlap then
@@ -435,6 +441,7 @@ local function spawnerfn()
 	inst:AddTag("structure")
 	inst:AddTag("chest")
 	inst:AddTag("_writeable")
+	inst:AddTag("noreplaceremove")
 
 	inst.AnimState:SetBank("chest")
 	inst.AnimState:SetBuild("treasure_chest")
@@ -486,8 +493,7 @@ local function Blocker(inst)
 
 
 	inst:AddTag("DYNLAYOUT_BLOCKER")
-
-	-- MakeInventoryPhysics(inst)
+	inst:AddTag("noreplaceremove")
 
 	inst.entity:SetPristine()
 
@@ -505,4 +511,4 @@ local function Blocker(inst)
 end
 
 return Prefab("dl_recorder", fn), Prefab("dl_tileflag", TileFlag), Prefab("dl_spawner", spawnerfn),
-	Prefab("dl_blocker", Blocker) -- Version 5.0
+	Prefab("dl_blocker", Blocker)

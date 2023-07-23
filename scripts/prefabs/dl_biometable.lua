@@ -26,7 +26,7 @@ local OceanTable = {
 
 }
 
-local function AddToTheWorld(inst, umss) table.insert(TheWorld.dl_setpieces, umss) end
+local function AddToTheWorld(inst, umss) table.insert(GLOBAL.TheWorld.dl_setpieces, umss) end
 
 local function FinalizeSpawn(inst, dl, x, y, z)
     local spawner = SpawnPrefab("dl_spawner")
@@ -42,14 +42,14 @@ end
 
 local function SpawnBiomeDL(inst)
     local x, y, z = inst.Transform:GetWorldPosition()
-    local tile = TheWorld.Map:GetTileAtPoint(x, y, z)
+    local tile = GLOBAL.TheWorld.Map:GetTileAtPoint(x, y, z)
     local dl
     local Table
     local DoSpawn = true
-    if TheWorld.Map:IsOceanAtPoint(x, y, z) then
+    if GLOBAL.TheWorld.Map:IsOceanAtPoint(x, y, z) then
         for i = -16, 16 do
             for k = -16, 16 do
-                if not TheWorld.Map:IsOceanAtPoint(x + i, y, z + k) then
+                if not GLOBAL.TheWorld.Map:IsOceanAtPoint(x + i, y, z + k) then
                     DoSpawn = false
                 end
             end
@@ -103,11 +103,11 @@ local function SpawnBiomeDL(inst)
         dl = weighted_random_choice(Table)
     end
 
-    if not TheWorld.dl_setpieces then
-        TheWorld.dl_setpieces = {}
+    if not GLOBAL.TheWorld.dl_setpieces then
+        GLOBAL.TheWorld.dl_setpieces = {}
     end
 
-    for i, v in ipairs(TheWorld.dl_setpieces) do
+    for i, v in ipairs(GLOBAL.TheWorld.dl_setpieces) do
         if v == dl then
             for i, v in ipairs(Table) do
                 if v == dl then
@@ -138,7 +138,7 @@ local function makefn()
     inst.entity:AddNetwork()
     inst.entity:SetPristine()
 
-    if not TheWorld.ismastersim then
+    if not GLOBAL.TheWorld.ismastersim then
         return inst
     end
     inst.DecidTable = DecidTable

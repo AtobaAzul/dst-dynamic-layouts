@@ -109,7 +109,7 @@ env.AddPlayerPostInit(function(inst)
     end
 	
 	--Client after this
-	if TheWorld.ismastersim then
+	if GLOBAL.TheWorld.ismastersim then
         return inst
     end
 	

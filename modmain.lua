@@ -1,5 +1,4 @@
 local require = GLOBAL.require
-
 PrefabFiles =
 {
     "dl_prefabs",
@@ -49,3 +48,47 @@ kinds["dl_recorder"] = {
 }
 
 kinds["dl_spawner"] = kinds["dl_recorder"]
+
+require "map/terrain"
+
+local _SetTile = GLOBAL.Map.SetTile
+function GLOBAL.Map:SetTile(x, y, tile, data, ...)
+    local original_tile = GLOBAL.TheWorld.Map:GetTile(x, y)
+    if data ~= nil and data.reversible then
+        table.insert(GLOBAL.TheWorld.dl_setpieces[data.group].tiles, { x = x, y = y, original_tile = original_tile })
+    end
+
+    _SetTile(self, x, y, tile, data, ...)
+end
+
+AddPlayerPostInit(function(inst)
+    inst:AddComponent("reviveablecorpse")
+end)
+
+AddPrefabPostInit("world", function(inst)
+    if not GLOBAL.TheWorld.ismastersim then return end
+
+    inst:ListenForEvent("revertterraform", function(inst, group)
+        for k, v in pairs(inst.dl_setpieces[group].tiles) do
+            inst:DoTaskInTime(math.random(), function(inst)
+                GLOBAL.TheWorld.Map:SetTile(v.x, v.y, v.original_tile)
+                inst.dl_setpieces[group].tiles[k] = nil
+            end)
+        end
+
+        for k, v in pairs(inst.dl_setpieces[group].prefabs) do
+            inst:DoTaskInTime(math.random(), function(inst)
+                GLOBAL.SpawnSaveRecord(v)
+                inst.dl_setpieces[group].prefabs[k] = nil
+            end)
+        end
+
+        for k, v in pairs(GLOBAL.Ents) do
+            inst:DoTaskInTime(math.random(), function(inst)
+                if v.group == group then
+                    v:Remove()
+                end
+            end)
+        end
+    end)
+end)

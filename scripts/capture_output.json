@@ -133,9 +133,17 @@
         "spawn_in_water": true,
         "has_tiles": true,
         "only_spawn_in_water": false,
-        "no_rotation": false
+        "no_rotation": false,
+        "angle_offset": 90,
+        "reversible": true,
+        "group": "Dungeon1",
+        "worldborder_buffer": 80
     },
     "Room": {
+        "reversible": true,
+        "group": "Dungeon1",
+        "worldborder_buffer": 80,
+
         "1": {
             "1": {
                 "x": -98,
@@ -472,6 +480,10 @@
         }
     },
     "Center": {
+        "reversible": true,
+        "group": "Dungeon1",
+        "worldborder_buffer": 80,
+
         "29": {
             "1": {
                 "data": {
