@@ -2,8 +2,7 @@ require "prefabutil"
 require "json"
 
 local io = require("io")
-local output_file = TUNING.DL.MODROOT ..
-	"scripts/capture_output.json"
+local output_file = TUNING.DL.MODROOT .. "scripts/capture_output.json"
 local NO_CAPTURE_TAGS = {
 	"NOCAPTURE",
 	"player",
@@ -117,7 +116,7 @@ local function Capture(inst, channeler)
 	saved_ents[text].reversible                = false
 	saved_ents[text].group                     = nil
 	saved_ents[text].worldborder_buffer        = 0
-	saved_ents[text].autotrigger_spawners      = true
+	saved_ents[text].autotri	gger_spawners      = true
 
 	for k, v in ipairs(ents) do
 		if v ~= inst then
@@ -276,21 +275,21 @@ local function TileFlag(inst)
 end
 
 local function SpawnLayout(inst, angle_override, file_path_override)
-	if inst.layout ~= nil then                       --the inst.layout table is a table that has different variants, or options avaible.
-		local layout = weighted_random_choice(inst.layout) --if it is avaible, then it picks one.
+	if inst.layout ~= nil then
+		local layout = weighted_random_choice(inst.layout)
 		if layout ~= "End" then
-			inst.components.writeable.text = layout  --and sets it as the text, which is used for the spawning.
+			inst.components.writeable.text = layout
 		else
 			inst:Remove()
 			return
 		end
 	end
 
-	if inst.components.writeable.text == "" or inst.components.writeable.text == nil then --if there's nothing written, or somehow nil, return early to prevent code below from running and likely crahsing
+	if inst.components.writeable.text == "" or inst.components.writeable.text == nil then
 		return
 	end
 
-	local file_path = file_path_override ~= nil and file_path_override or output_file
+	local file_path = inst.file_path_override ~= nil and inst.file_path_override or file_path_override ~= nil and file_path_override or output_file
 	local file = io.open(file_path, "r+")
 	local x, y, z = inst.Transform:GetWorldPosition()
 
@@ -410,16 +409,16 @@ local function SpawnLayout(inst, angle_override, file_path_override)
 							ent:DoTaskInTime(0, function(_inst)
 								local _x, _y, _z = _inst.Transform:GetWorldPosition()
 								if prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) <= 0 or not prevent_overlap then
-									print(autotrigger_spawners)
 									if autotrigger_spawners then
-										print("what the fuck don't do that")
-										SpawnLayout(_inst, (use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil)
+										SpawnLayout(_inst, (use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil, file_path_override)
 									else
-										_inst.AnimState:SetMultColour(0,0,0,0)
+										_inst.wait_for_spawning = true
+										_inst.group = group
+										_inst.AnimState:SetMultColour(0, 0, 0, 0)
 										_inst:AddTag("NOCLICK")
 										_inst:AddTag("NOBLOCK")
 										_inst.angle_away = (use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil
-										_inst:ListenForEvent("spawn_dl_"..group, SpawnLayout)
+										_inst:ListenForEvent("spawn_dl_" .. group, SpawnLayout)
 									end
 								else
 									_inst:Remove()
@@ -434,6 +433,30 @@ local function SpawnLayout(inst, angle_override, file_path_override)
 
 	inst:DoTaskInTime(0, inst.Remove)
 end
+
+local function OnSave_spawner(inst, data)
+	if data ~= nil and inst.wait_for_spawning then
+		data.wait_for_spawning = inst.wait_for_spawning
+		data.group = inst.group
+		data.angle_awway = inst.angle_away 
+	end
+	return data
+end
+
+local function OnLoad_spawner(inst, data)
+	if data~=nil and data.wait_for_spawning then
+		inst.wait_for_spawning = data.wait_for_spawning
+		inst.group = data.group
+		inst.angle_awway = data.angle_away 
+		
+		inst.AnimState:SetMultColour(0, 0, 0, 0)
+		inst:AddTag("NOCLICK")
+		inst:AddTag("NOBLOCK")
+		inst:ListenForEvent("spawn_dl_" .. inst.group, SpawnLayout)
+	end
+	return inst
+end
+
 
 local function spawnerfn()
 	local inst = CreateEntity()
@@ -457,6 +480,9 @@ local function spawnerfn()
 	if not TheWorld.ismastersim then
 		return inst
 	end
+
+	inst.OnSave = OnSave_spawner
+	inst.OnLoad = OnLoad_spawner
 
 	inst.SpawnLayout = SpawnLayout
 

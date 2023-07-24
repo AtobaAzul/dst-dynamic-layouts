@@ -87,4 +87,21 @@ AddPrefabPostInit("world", function(inst)
             end)
         end
     end)
+
+    local _OnSave = inst.OnSave
+    local _OnLoad = inst.OnLoad
+
+    inst.OnSave = function(inst, data)
+        if data ~= nil then 
+            data.dl_setpieces = inst.dl_setpieces
+        end
+        return _OnSave(inst, data)
+    end
+
+    inst.OnLoad = function (inst, data)
+        if data ~= nil and data.dl_setpieces ~= nil then
+            inst.dl_setpieces = data.dl_setpieces
+        end
+        return _OnLoad(inst, data)
+    end
 end)
