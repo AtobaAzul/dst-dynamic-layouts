@@ -116,7 +116,7 @@ local function Capture(inst, channeler)
 	saved_ents[text].reversible                = false
 	saved_ents[text].group                     = nil
 	saved_ents[text].worldborder_buffer        = 0
-	saved_ents[text].autotri	gger_spawners      = true
+	saved_ents[text].autotrigger_spawners      = true
 
 	for k, v in ipairs(ents) do
 		if v ~= inst then
