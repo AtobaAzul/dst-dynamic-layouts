@@ -376,7 +376,7 @@ local function SpawnLayout(inst, extradata)
 				if reversible then
 					local nearbyents = TheSim:FindEntities(px, v.relative_y + y, pz, 4, nil,
 						{ "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable", "player", "playerghost", "character", "multiplayer_portal",
-							"companion", "abigail" })
+							"companion", "abigail", "pollen"})
 					if group ~= nil then
 						for k, v in pairs(nearbyents) do
 							local data = v:GetSaveRecord()
@@ -408,6 +408,9 @@ local function SpawnLayout(inst, extradata)
 					TheWorld:DoTaskInTime(math.random(), function()
 						if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water or only_spawn_in_water and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
 							local ent = SpawnSaveRecord(v["1"])
+							if ent == nil then
+								return
+							end
 							ent.group = group
 							ent.Transform:SetPosition(px, v.relative_y + y, pz)
 							ent:AddTag("noreplaceremove")

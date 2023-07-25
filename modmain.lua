@@ -67,6 +67,9 @@ AddPrefabPostInit("world", function(inst)
         GLOBAL.TheWorld.dl_setpieces = {}
     end
     GLOBAL.TheWorld:ListenForEvent("revertterraform", function(inst, group)
+        if group == nil or group ~= nil and GLOBAL.TheWorld.dl_setpieces[group] == nil then
+            return
+        end
         for k, v in pairs(GLOBAL.TheWorld.dl_setpieces[group].tiles) do
             GLOBAL.TheWorld:DoTaskInTime(math.random()+math.random(), function(inst)
                 GLOBAL.TheWorld.Map:SetTile(v.x, v.y, v.original_tile)
