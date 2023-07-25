@@ -64,6 +64,5 @@ local function BinaryConfig(name, label, hover, default)
     }
 end
 ------------------------------
-
 configuration_options = {
 }

@@ -63,24 +63,30 @@ end
 
 AddPrefabPostInit("world", function(inst)
     if not GLOBAL.TheWorld.ismastersim then return end
-
-    inst:ListenForEvent("revertterraform", function(inst, group)
-        for k, v in pairs(inst.dl_setpieces[group].tiles) do
-            inst:DoTaskInTime(math.random(), function(inst)
+    if GLOBAL.TheWorld.dl_setpieces == nil then
+        GLOBAL.TheWorld.dl_setpieces = {}
+    end
+    GLOBAL.TheWorld:ListenForEvent("revertterraform", function(inst, group)
+        for k, v in pairs(GLOBAL.TheWorld.dl_setpieces[group].tiles) do
+            GLOBAL.TheWorld:DoTaskInTime(math.random()+math.random(), function(inst)
                 GLOBAL.TheWorld.Map:SetTile(v.x, v.y, v.original_tile)
-                inst.dl_setpieces[group].tiles[k] = nil
+            end)
+        end
+    
+        GLOBAL.TheWorld.dl_setpieces[group].tiles = {}
+
+        for k, v in pairs(GLOBAL.TheWorld.dl_setpieces[group].prefabs) do
+            inst:DoTaskInTime(math.random()+math.random(), function(inst)
+                if v ~= nil and v.prefab ~= nil then
+                    GLOBAL.SpawnSaveRecord(v)
+                end
             end)
         end
 
-        for k, v in pairs(inst.dl_setpieces[group].prefabs) do
-            inst:DoTaskInTime(math.random(), function(inst)
-                GLOBAL.SpawnSaveRecord(v)
-                inst.dl_setpieces[group].prefabs[k] = nil
-            end)
-        end
+        GLOBAL.TheWorld.dl_setpieces[group].prefabs = {}
 
         for k, v in pairs(GLOBAL.Ents) do
-            inst:DoTaskInTime(math.random(), function(inst)
+            GLOBAL.TheWorld:DoTaskInTime(math.random()+math.random(), function(inst)
                 if v.group == group then
                     v:Remove()
                 end
@@ -88,20 +94,25 @@ AddPrefabPostInit("world", function(inst)
         end
     end)
 
-    local _OnSave = inst.OnSave
-    local _OnLoad = inst.OnLoad
+    local _OnSave = GLOBAL.TheWorld.OnSave
+    local _OnLoad = GLOBAL.TheWorld.OnLoad
 
-    inst.OnSave = function(inst, data)
-        if data ~= nil then 
+    GLOBAL.TheWorld.OnSave = function(inst, data)
+        if data ~= nil then
             data.dl_setpieces = inst.dl_setpieces
         end
-        return _OnSave(inst, data)
+        if _OnSave ~= nil then
+            return _OnSave(inst, data)
+        end
+        return data
     end
 
-    inst.OnLoad = function (inst, data)
+    GLOBAL.TheWorld.OnLoad = function(inst, data)
         if data ~= nil and data.dl_setpieces ~= nil then
             inst.dl_setpieces = data.dl_setpieces
         end
-        return _OnLoad(inst, data)
+        if _OnLoad ~= nil then
+            return _OnLoad(inst, data)
+        end
     end
 end)

@@ -99,7 +99,6 @@ local function Capture(inst, channeler)
 	local text = (inst.components.writeable.text == nil and "returnedTable" .. num) or
 		string.gsub(inst.components.writeable.text, " ", "_")
 	local file = io.open(output_file, "r+")
-
 	if saved_ents[text] == nil then
 		saved_ents[text] = {}
 	end
@@ -117,6 +116,7 @@ local function Capture(inst, channeler)
 	saved_ents[text].group                     = nil
 	saved_ents[text].worldborder_buffer        = 0
 	saved_ents[text].autotrigger_spawners      = true
+	saved_ents[text].no_spawners_in_water      = false
 
 	for k, v in ipairs(ents) do
 		if v ~= inst then
@@ -274,7 +274,8 @@ local function TileFlag(inst)
 	return inst
 end
 
-local function SpawnLayout(inst, angle_override, file_path_override)
+local function SpawnLayout(inst, extradata)
+	printwrap("extradata", extradata)
 	if inst.layout ~= nil then
 		local layout = weighted_random_choice(inst.layout)
 		if layout ~= "End" then
@@ -289,7 +290,7 @@ local function SpawnLayout(inst, angle_override, file_path_override)
 		return
 	end
 
-	local file_path = inst.file_path_override ~= nil and inst.file_path_override or file_path_override ~= nil and file_path_override or output_file
+	local file_path = inst.file_path_override ~= nil and inst.file_path_override or extradata ~= nil and extradata.file_path_override ~= nil and extradata.file_path_override or output_file
 	local file = io.open(file_path, "r+")
 	local x, y, z = inst.Transform:GetWorldPosition()
 
@@ -315,6 +316,7 @@ local function SpawnLayout(inst, angle_override, file_path_override)
 		local group = data[inst.components.writeable.text].group
 		local worldborder_buffer = data[inst.components.writeable.text].worldborder_buffer
 		local autotrigger_spawners = data[inst.components.writeable.text].autotrigger_spawners
+		local no_spawners_in_water = data[inst.components.writeable.text].no_spawners_in_water
 
 		local angles, angle
 		if group ~= nil and reversible then
@@ -359,7 +361,7 @@ local function SpawnLayout(inst, angle_override, file_path_override)
 		end
 
 
-		angle = type(angle_override) == "number" and angle_override or angle
+		angle = type(extradata.angle_override) == "number" and extradata.angle_override or angle
 		local spawners = 0
 		for k, v in pairs(data[inst.components.writeable.text]) do
 			if type(v) == "table" and v.relative_x ~= nil then
@@ -375,10 +377,12 @@ local function SpawnLayout(inst, angle_override, file_path_override)
 					local nearbyents = TheSim:FindEntities(px, v.relative_y + y, pz, 4, nil,
 						{ "noreplaceremove", "CLASSIFIED", "INLIMBO", "irreplaceable", "player", "playerghost", "character", "multiplayer_portal",
 							"companion", "abigail" })
-					for k, v in pairs(nearbyents) do
-						local data = v:GetSaveRecord()
-						table.insert(TheWorld.dl_setpieces[group].prefabs, data)
-						v:Remove()
+					if group ~= nil then
+						for k, v in pairs(nearbyents) do
+							local data = v:GetSaveRecord()
+							table.insert(TheWorld.dl_setpieces[group].prefabs, data)
+							v:Remove()
+						end
 					end
 				end
 
@@ -391,41 +395,52 @@ local function SpawnLayout(inst, angle_override, file_path_override)
 
 					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water then
 						if v.tile == WORLD_TILES.MONKEY_DOCK then
-							TheWorld.components.dockmanager:CreateDockAtPoint(px, v.relative_y + y, pz, WORLD_TILES.MONKEY_DOCK)
+							TheWorld:DoTaskInTime(math.random(), function()
+								TheWorld.components.dockmanager:CreateDockAtPoint(px, v.relative_y + y, pz, WORLD_TILES.MONKEY_DOCK)
+							end)
 						else
-							TheWorld.Map:SetTile(tile_x, tile_z, v.tile, { group = group, reversible = reversible })
-						end
-					end
-				else
-					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water or only_spawn_in_water and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
-						local ent = SpawnSaveRecord(v["1"])
-						ent.group = group
-						ent.Transform:SetPosition(px, v.relative_y + y, pz)
-						ent:AddTag("noreplaceremove")
-						if ent.prefab == "dl_spawner" then
-							ent.layout = v.options
-
-
-							ent:DoTaskInTime(0, function(_inst)
-								local _x, _y, _z = _inst.Transform:GetWorldPosition()
-								if prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) <= 0 or not prevent_overlap then
-									if autotrigger_spawners then
-										SpawnLayout(_inst, (use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil, file_path_override)
-									else
-										_inst.wait_for_spawning = true
-										_inst.group = group
-										_inst.AnimState:SetMultColour(0, 0, 0, 0)
-										_inst:AddTag("NOCLICK")
-										_inst:AddTag("NOBLOCK")
-										_inst.angle_away = (use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil
-										_inst:ListenForEvent("spawn_dl_" .. group, SpawnLayout)
-									end
-								else
-									_inst:Remove()
-								end
+							TheWorld:DoTaskInTime(math.random(), function()
+								TheWorld.Map:SetTile(tile_x, tile_z, v.tile, { group = group, reversible = reversible })
 							end)
 						end
 					end
+				else
+					TheWorld:DoTaskInTime(math.random(), function()
+						if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water or only_spawn_in_water and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
+							local ent = SpawnSaveRecord(v["1"])
+							ent.group = group
+							ent.Transform:SetPosition(px, v.relative_y + y, pz)
+							ent:AddTag("noreplaceremove")
+							ent.group = group
+							if ent.prefab == "dl_spawner" then
+								if no_spawners_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or not no_spawners_in_water then
+									ent.layout = v.options
+
+
+									ent:DoTaskInTime(0, function(_inst)
+										local _x, _y, _z = _inst.Transform:GetWorldPosition()
+										if prevent_overlap and #TheSim:FindEntities(_x, _y, _z, 1, { "DYNLAYOUT_BLOCKER" }) <= 0 or not prevent_overlap then
+											if autotrigger_spawners then
+												SpawnLayout(_inst, { angle_override = (use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil, file_path_override = extradata.file_path_override })
+											else
+												_inst.wait_for_spawning = true
+												_inst.group = group
+												_inst.AnimState:SetMultColour(0, 0, 0, 0)
+												_inst:AddTag("NOCLICK")
+												_inst:AddTag("NOBLOCK")
+												_inst.angle_away = (use_angle_away_from_spawn and math.atan2(px - x, z - pz) - math.rad(angle_offset)) or nil
+												_inst:ListenForEvent("spawn_dl_" .. group, SpawnLayout)
+											end
+										else
+											_inst:Remove()
+										end
+									end)
+								else
+									ent:Remove()
+								end
+							end
+						end
+					end)
 				end
 			end
 		end
@@ -438,22 +453,26 @@ local function OnSave_spawner(inst, data)
 	if data ~= nil and inst.wait_for_spawning then
 		data.wait_for_spawning = inst.wait_for_spawning
 		data.group = inst.group
-		data.angle_awway = inst.angle_away 
+		data.angle_awway = inst.angle_away
+		data.layout = inst.layout
 	end
 	return data
 end
 
 local function OnLoad_spawner(inst, data)
-	if data~=nil and data.wait_for_spawning then
+	if data ~= nil then
 		inst.wait_for_spawning = data.wait_for_spawning
 		inst.group = data.group
-		inst.angle_awway = data.angle_away 
-		
-		inst.AnimState:SetMultColour(0, 0, 0, 0)
-		inst:AddTag("NOCLICK")
-		inst:AddTag("NOBLOCK")
-		inst:ListenForEvent("spawn_dl_" .. inst.group, SpawnLayout)
+		inst.angle_awway = data.angle_away
+		inst.layout = data.layout
+		if data.wait_for_spawning then
+			inst.AnimState:SetMultColour(0, 0, 0, 0)
+			inst:AddTag("NOCLICK")
+			inst:AddTag("NOBLOCK")
+			inst:ListenForEvent("spawn_dl_" .. inst.group, SpawnLayout)
+		end
 	end
+
 	return inst
 end
 
@@ -470,7 +489,7 @@ local function spawnerfn()
 	inst:AddTag("chest")
 	inst:AddTag("_writeable")
 	inst:AddTag("noreplaceremove")
-
+	inst:AddTag("dl_spawner")
 	inst.AnimState:SetBank("chest")
 	inst.AnimState:SetBuild("treasure_chest")
 	inst.AnimState:PlayAnimation("closed")
@@ -521,10 +540,17 @@ local function Blocker(inst)
 
 	inst.entity:AddTransform()
 	inst.entity:AddNetwork()
+	inst.entity:AddAnimState()
 
 
 	inst:AddTag("DYNLAYOUT_BLOCKER")
 	inst:AddTag("noreplaceremove")
+
+	inst.AnimState:SetLayer(LAYER_BACKGROUND)
+	inst.AnimState:SetOrientation(ANIM_ORIENTATION.OnGround)
+	inst.AnimState:SetBank("chest")
+	inst.AnimState:SetBuild("treasure_chest")
+	inst.AnimState:PlayAnimation("closed")
 
 	inst.entity:SetPristine()
 
