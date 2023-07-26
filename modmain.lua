@@ -70,16 +70,23 @@ AddPrefabPostInit("world", function(inst)
         if group == nil or group ~= nil and GLOBAL.TheWorld.dl_setpieces[group] == nil then
             return
         end
+
+
         for k, v in pairs(GLOBAL.TheWorld.dl_setpieces[group].tiles) do
-            GLOBAL.TheWorld:DoTaskInTime(math.random()+math.random(), function(inst)
+            GLOBAL.TheWorld:DoTaskInTime(k * 0.0083, function(inst)
                 GLOBAL.TheWorld.Map:SetTile(v.x, v.y, v.original_tile)
             end)
+            if k == #GLOBAL.TheWorld.dl_setpieces[group].tiles then
+                GLOBAL.TheWorld:DoTaskInTime(k * 0.0083+0.5, function(inst)
+                    GLOBAL.TheWorld:PushEvent("finishedterraform")
+                end)
+            end
         end
-    
+
         GLOBAL.TheWorld.dl_setpieces[group].tiles = {}
 
         for k, v in pairs(GLOBAL.TheWorld.dl_setpieces[group].prefabs) do
-            inst:DoTaskInTime(math.random()+math.random(), function(inst)
+            inst:DoTaskInTime(k * 0.0083, function(inst)
                 if v ~= nil and v.prefab ~= nil then
                     GLOBAL.SpawnSaveRecord(v)
                 end
@@ -87,10 +94,11 @@ AddPrefabPostInit("world", function(inst)
         end
 
         GLOBAL.TheWorld.dl_setpieces[group].prefabs = {}
-
+        local num = 0
         for k, v in pairs(GLOBAL.Ents) do
-            GLOBAL.TheWorld:DoTaskInTime(math.random()+math.random(), function(inst)
+            GLOBAL.TheWorld:DoTaskInTime(num * 0.0083, function(inst)
                 if v.group == group then
+                    num = num + 1
                     v:Remove()
                 end
             end)

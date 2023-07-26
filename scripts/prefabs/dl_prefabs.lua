@@ -395,17 +395,17 @@ local function SpawnLayout(inst, extradata)
 
 					if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water then
 						if v.tile == WORLD_TILES.MONKEY_DOCK then
-							TheWorld:DoTaskInTime(math.random(), function()
+							TheWorld:DoTaskInTime(k*0.0083, function()
 								TheWorld.components.dockmanager:CreateDockAtPoint(px, v.relative_y + y, pz, WORLD_TILES.MONKEY_DOCK)
 							end)
 						else
-							TheWorld:DoTaskInTime(math.random(), function()
+							TheWorld:DoTaskInTime(k*0.0083, function()
 								TheWorld.Map:SetTile(tile_x, tile_z, v.tile, { group = group, reversible = reversible })
 							end)
 						end
 					end
 				else
-					TheWorld:DoTaskInTime(math.random(), function()
+					TheWorld:DoTaskInTime(k*0.0083, function()
 						if not spawn_in_water and TheWorld.Map:IsPassableAtPoint(px, v.relative_y + y, pz) or spawn_in_water or only_spawn_in_water and TheWorld.Map:IsOceanAtPoint(px, v.relative_y + y, pz) then
 							local ent = SpawnSaveRecord(v["1"])
 							if ent == nil then
