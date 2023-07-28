@@ -338,14 +338,6 @@ local function SpawnLayout(inst, extradata)
 		local max_x = world_size / 2
 		local max_z = world_size / 2
 
-		print("has_tiles", has_tiles)
-		print("spawn_in_water", spawn_in_water)
-		print("only_spawn_in_water", only_spawn_in_water)
-		print("smooth_rorate", smooth_rorate)
-		print("no_rotation", no_rotation)
-		print("use_angle_away_from_spawn", use_angle_away_from_spawn)
-		print("prevent_overlap", prevent_overlap)
-
 		if has_tiles then
 			angles = { 0, 90, 180, 270, 360 }
 		else
