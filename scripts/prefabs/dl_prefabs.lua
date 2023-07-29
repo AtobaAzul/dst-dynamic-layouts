@@ -535,17 +535,11 @@ local function Blocker(inst)
 
 	inst.entity:AddTransform()
 	inst.entity:AddNetwork()
-	inst.entity:AddAnimState()
 
 
 	inst:AddTag("DYNLAYOUT_BLOCKER")
 	inst:AddTag("noreplaceremove")
 
-	inst.AnimState:SetLayer(LAYER_BACKGROUND)
-	inst.AnimState:SetOrientation(ANIM_ORIENTATION.OnGround)
-	inst.AnimState:SetBank("chest")
-	inst.AnimState:SetBuild("treasure_chest")
-	inst.AnimState:PlayAnimation("closed")
 
 	inst.entity:SetPristine()
 
