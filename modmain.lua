@@ -66,6 +66,7 @@ AddPrefabPostInit("world", function(inst)
     if GLOBAL.TheWorld.dl_setpieces == nil then
         GLOBAL.TheWorld.dl_setpieces = {}
     end
+
     GLOBAL.TheWorld:ListenForEvent("revertterraform", function(inst, group)
         if group == nil or group ~= nil and GLOBAL.TheWorld.dl_setpieces[group] == nil then
             return
