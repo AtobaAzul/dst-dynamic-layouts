@@ -9,8 +9,7 @@ description = [[A modding tool for empowering modders with setpiece making utili
 
 author = "󰀈 The Uncomp Dev Team 󰀈"
 
-version = "3"
--- VERSION SCHEME
+version = "6"
 
 api_version = 10
 

@@ -61,50 +61,43 @@ function GLOBAL.Map:SetTile(x, y, tile, data, ...)
     _SetTile(self, x, y, tile, data, ...)
 end
 
+local function RevertTerraform(inst, group)
+    if group == nil or group ~= nil and GLOBAL.TheWorld.dl_setpieces[group] == nil then
+        return
+    end
+
+    for k, v in pairs(GLOBAL.TheWorld.dl_setpieces[group].tiles) do
+        GLOBAL.TheWorld.Map:SetTile(v.x, v.y, v.original_tile)
+        if k == #GLOBAL.TheWorld.dl_setpieces[group].tiles then
+            GLOBAL.TheWorld:PushEvent("finishedterraform")
+        end
+    end
+
+    GLOBAL.TheWorld.dl_setpieces[group].tiles = {}
+
+    for k, v in pairs(GLOBAL.TheWorld.dl_setpieces[group].prefabs) do
+        if v ~= nil and v.prefab ~= nil then
+            GLOBAL.SpawnSaveRecord(v)
+        end
+    end
+
+    GLOBAL.TheWorld.dl_setpieces[group].prefabs = {}
+    local num = 0
+    for k, v in pairs(GLOBAL.Ents) do
+        if v.group == group then
+            num = num + 1
+            v:Remove()
+        end
+    end
+end
+
 AddPrefabPostInit("world", function(inst)
     if not GLOBAL.TheWorld.ismastersim then return end
     if GLOBAL.TheWorld.dl_setpieces == nil then
         GLOBAL.TheWorld.dl_setpieces = {}
     end
 
-    GLOBAL.TheWorld:ListenForEvent("revertterraform", function(inst, group)
-        if group == nil or group ~= nil and GLOBAL.TheWorld.dl_setpieces[group] == nil then
-            return
-        end
-
-
-        for k, v in pairs(GLOBAL.TheWorld.dl_setpieces[group].tiles) do
-            GLOBAL.TheWorld:DoTaskInTime(k * 0.0083, function(inst)
-                GLOBAL.TheWorld.Map:SetTile(v.x, v.y, v.original_tile)
-            end)
-            if k == #GLOBAL.TheWorld.dl_setpieces[group].tiles then
-                GLOBAL.TheWorld:DoTaskInTime(k * 0.0083+0.5, function(inst)
-                    GLOBAL.TheWorld:PushEvent("finishedterraform")
-                end)
-            end
-        end
-
-        GLOBAL.TheWorld.dl_setpieces[group].tiles = {}
-
-        for k, v in pairs(GLOBAL.TheWorld.dl_setpieces[group].prefabs) do
-            inst:DoTaskInTime(k * 0.0083, function(inst)
-                if v ~= nil and v.prefab ~= nil then
-                    GLOBAL.SpawnSaveRecord(v)
-                end
-            end)
-        end
-
-        GLOBAL.TheWorld.dl_setpieces[group].prefabs = {}
-        local num = 0
-        for k, v in pairs(GLOBAL.Ents) do
-            GLOBAL.TheWorld:DoTaskInTime(num * 0.0083, function(inst)
-                if v.group == group then
-                    num = num + 1
-                    v:Remove()
-                end
-            end)
-        end
-    end)
+    GLOBAL.TheWorld:ListenForEvent("revertterraform", RevertTerraform)
 
     local _OnSave = GLOBAL.TheWorld.OnSave
     local _OnLoad = GLOBAL.TheWorld.OnLoad
@@ -120,13 +113,13 @@ AddPrefabPostInit("world", function(inst)
     end
 
     GLOBAL.TheWorld.OnLoad = function(inst, data)
-        if data ~= nil and data.dl_setpieces ~= nil then
+        if data ~= nil then
             inst.dl_setpieces = data.dl_setpieces
+            --inst.dl_tasks = data.dl_tasks
         end
         if _OnLoad ~= nil then
             return _OnLoad(inst, data)
         end
+        return data
     end
 end)
-
-
